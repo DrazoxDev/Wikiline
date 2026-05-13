@@ -1,18 +1,23 @@
 import Header from "../components/Header";
-import ListArtworks from '../components/artwork/ListArtworks';
-import { useArtworks } from "../stores/artwork/artwork.selectors";
-
+// import ListArtworks from '../components/artwork/ListArtworks';
+// import { useArtworks } from "../stores/artwork/artwork.selectors";
+import { NavLink } from 'react-router';
 
 const Home = () => {
-  const artworks = useArtworks();
-  return (
+//   const artworks = useArtworks();
+   return (
     <>
       <Header />
       <main className="container mx-auto p-4">
-        <section>
-          <h2>Explorez notre collection d'œuvres</h2>
-          <ListArtworks artworks={artworks}>
-          </ListArtworks>
+        <section className="flex flex-col items-center">
+          <h2 className=" font-soustitre">Timeline version personnalitée</h2>
+          <h2 className="text-teal-700 font-titre">
+            Wikipédia
+          </h2>
+          <p>Le seul jeu de carte qui vous fera changer de temporalité.</p>
+          <NavLink key={"/"} to={"/"} className={"bg-teal-700 text-white font-bold p-4 rounded-2xl hover:scale-110 transform duration-75"}>{"Commencer à jouer"}</NavLink>
+          {/* <ListArtworks artworks={artworks}>
+          </ListArtworks> */}
         </section>
       </main>
     </>

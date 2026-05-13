@@ -9,19 +9,19 @@ import { useEffect } from "react";
 const App = () => {
 
   const statuts = useArtworkStatus();
-  const {loadArtworks}= useArtworkActions();
-  useEffect (() => {
-     loadArtworks();
-  },[loadArtworks])
+  // const {loadArtworks}= useArtworkActions();
+  // useEffect (() => {
+  //    loadArtworks();
+  // },[loadArtworks])
 
-  if (statuts === "loading" || statuts === "idle") {
-    return(
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-xl">Chargement...</p>
-      </div>
+  // if (statuts === "loading" || statuts === "idle") {
+  //   return(
+  //     <div className="flex items-center justify-center h-screen">
+  //       <p className="text-xl">Chargement...</p>
+  //     </div>
 
-    )
-  }
+  //   )
+  // }
     if (statuts === "error") {
     return(
       <div className="flex items-center justify-center h-screen">
@@ -30,15 +30,15 @@ const App = () => {
 
     )
   }
-    if (statuts === "success" || statuts === "idle") {
+    if (statuts === "success" || statuts === "idle" || statuts === "loading") {
       return (
     <>
     <BrowserRouter>
     <Routes>
         <Route path="/" element={<Home/>}></Route>
         <Route path="/admin" element={<Admin/>}></Route>
-        <Route path="/prepare-expo" element={<PrepareExpo/>}></Route>
-        <Route path="/my-expo" element={<MyExpo/>}></Route>
+        <Route path="/connexion" element={<PrepareExpo/>}></Route>
+        <Route path="/inscription" element={<MyExpo/>}></Route>
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>

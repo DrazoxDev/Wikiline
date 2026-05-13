@@ -1,10 +1,10 @@
 import { NavLink } from "react-router";
 
 const navItems = [
-    { to: "/", label: "Accueil", bgColor: "bg-slate-600" },
-    { to: "/prepare-expo", label: "Préparer mon expo", bgColor: "bg-emerald-600" },
-    { to: "/my-expo", label: "Voir mon expo", bgColor: "bg-indigo-600" },
-    { to: "/admin", label: "Administrer", bgColor: "bg-rose-600" },
+    // { to: "/", label: "Accueil", bgColor: "bg-slate-600" }, 
+    { to: "/commentJouer", label: "Comment jouer", bgColor: "font-sousTitre text-black" },
+    { to: "/inscription", label: "S'inscrire", bgColor: "font-sousTitre couleur-vert border-2" },
+    { to: "/connexion", label: "Connexion", bgColor: "font-sousTitre bg-[var(--color-green)]" },
 ];
 
 
