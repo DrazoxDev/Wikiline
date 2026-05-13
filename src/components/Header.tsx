@@ -10,12 +10,15 @@ const navItems = [
 
 const Header=()=> {
     return (
-        <header className="p-4">
-            <nav className="flex flex-wrap gap-4" aria-label="Navigation principale">
+        <header className="p-4 flex flex-wrap items-center justify-between">
+            <div>
                 <img src="" alt="" />
-                <h1 className="text-3xl text-gray-900 mb-4 font-soustitre">Wikiline</h1>
+                <a href="/" className="text-3xl text-gray-900 mb-4 font-soustitre">Wikiline</a>
+            </div>
+            
+            <nav className="flex flex-wrap gap-4" aria-label="Navigation principale">
                 {navItems.map((item) =>(
-                    <NavLink key={item.to} to={item.to} className={ `font-soustitre text-center rounded-lg ${item.bgColor}`}>{item.label}</NavLink>
+                    <NavLink key={item.to} to={item.to} className={ `px-4 py-2 font-soustitre rounded-lg ${item.bgColor}`}>{item.label}</NavLink>
                 ))}
                 
             </nav>
