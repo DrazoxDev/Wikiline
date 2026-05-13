@@ -6,6 +6,8 @@ import PrepareExpo from "./pages/ExpoComposer";
 import { BrowserRouter, Route, Routes} from "react-router";
 import {useArtworkActions, useArtworkStatus } from "./stores/artwork/artwork.selectors";
 import { useEffect } from "react";
+import Connexion from "./pages/Connexion";
+import Inscription from "./pages/Inscription";
 const App = () => {
 
   const statuts = useArtworkStatus();
@@ -37,8 +39,8 @@ const App = () => {
     <Routes>
         <Route path="/" element={<Home/>}></Route>
         <Route path="/admin" element={<Admin/>}></Route>
-        <Route path="/connexion" element={<PrepareExpo/>}></Route>
-        <Route path="/inscription" element={<MyExpo/>}></Route>
+        <Route path="/connexion" element={<Connexion/>}></Route>
+        <Route path="/inscription" element={<Inscription/>}></Route>
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>

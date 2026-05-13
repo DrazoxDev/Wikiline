@@ -18,18 +18,20 @@
 @layer utilities {
   .font-titre {
     font-family: var(--font-titre);
-    font-size: 6rem;
     color: #21897E;
   }
 
   .font-soustitre {
     font-family: var(--font-soustitre);
-    font-size: 2.5rem;
     color: black;
   }
   .couleur-vert{
     color: #21897E;
   }
+  .couleur-blanc{
+    color: #E0E2DB;
+  }
+
 }
 :root{
     --font-soustitre:"Parkinsans", sans-serif;
