@@ -23,42 +23,20 @@ export type WikiQueryResponse = {
   };
 };
 
-type WikidataClaimValue = {
-  mainsnak: {
-    datavalue?: { value: { id: string } };
-  };
-};
-
-type WikidataTimeClaim = {
-  mainsnak: {
-    datavalue?: { value: { time: string } };
-  };
-};
-
 export type WikidataClaimsResponse = {
   entities: Record<
     string,
     {
       missing?: string;
-      sitelinks?: Record<string, unknown>;
       claims?: {
-        P31?: WikidataClaimValue[];
-        P569?: WikidataTimeClaim[];
+        P31?: {
+          mainsnak: {
+            datavalue?: { value: { id: string } };
+          };
+        }[];
       };
     }
   >;
-};
-
-export type WikiRandomQueryResponse = {
-  query: {
-    pages: Record<
-      string,
-      {
-        title?: string;
-        pageprops?: { wikibase_item?: string };
-      }
-    >;
-  };
 };
 
 export type PersonRawData = {
@@ -69,11 +47,4 @@ export type PersonRawData = {
   wikidataId: string;
   pageViews: number;
   articleSize: number;
-};
-
-export type RandomHumanCandidate = {
-  wikidataId: string;
-  wikipediaTitle: string;
-  birthYear: number;
-  sitelinks: number;
 };

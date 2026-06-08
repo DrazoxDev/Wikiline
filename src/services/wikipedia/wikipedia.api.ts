@@ -1,5 +1,3 @@
-import { debugLog } from "../../stores/debug/useDebugStore";
-import { fetchWithTimeout } from "../../utils/fetchWithTimeout";
 import type {
   PageViewsResponse,
   WikiQueryResponse,
@@ -16,23 +14,13 @@ function encodeWikiTitle(title: string): string {
 export async function fetchPersonSummary(
   title: string,
 ): Promise<WikipediaSummary> {
-  const url = `${WIKI_FR}/api/rest_v1/page/summary/${encodeWikiTitle(title)}`;
-  debugLog("Wikipedia", "info", `Summary → ${title}`);
-
-  const res = await fetchWithTimeout(url, {}, 15_000);
+  const res = await fetch(
+    `${WIKI_FR}/api/rest_v1/page/summary/${encodeWikiTitle(title)}`,
+  );
   if (!res.ok) {
-    debugLog("Wikipedia", "error", `Summary échoué : ${title}`, `HTTP ${res.status}`);
     throw new Error(`Page Wikipédia introuvable : ${title}`);
   }
-
-  const data: WikipediaSummary = await res.json();
-  debugLog(
-    "Wikipedia",
-    data.thumbnail?.source ? "success" : "warn",
-    `Summary OK : ${data.title}`,
-    data.thumbnail?.source ? "image présente" : "PAS D'IMAGE — carte ignorée",
-  );
-  return data;
+  return res.json();
 }
 
 export async function fetchWikibaseId(title: string): Promise<string> {

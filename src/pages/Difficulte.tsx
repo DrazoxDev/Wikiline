@@ -16,19 +16,16 @@ const Difficulte = () => {
         <ModeDeDifficulte
             titre="Facile"
             nbretoiles={1}
-            difficulty="easy"
             specificitee={["5 vies", "Pas de temps", "Personnalité connue"]}
         />
         <ModeDeDifficulte
             titre="Moyen"
             nbretoiles={3}
-            difficulty="medium"
             specificitee={["4 vies", "1min par essais", "Personnalité moyennement connue"]}
         />
         <ModeDeDifficulte
             titre="Difficile"
             nbretoiles={5}
-            difficulty="hard"
             specificitee={["3 vies", "30sec par essais", "Personnalité peu connue"]}
         />
     </div>
