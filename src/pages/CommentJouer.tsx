@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import { PersonalityCard } from "../components/cards/PersonalityCard";
 
 const CommentJouer = () => {
     return (
@@ -32,9 +33,9 @@ const CommentJouer = () => {
                     </div>
 
                     <div className="flex-[1]">
-                        <CartePersonnage
-                            image="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/440px-President_Barack_Obama.jpg"
-                            nom="Barack Obama"
+                        <PersonalityCard
+                            imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/440px-President_Barack_Obama.jpg"
+                            name="Barack Obama"
                             description="Premier président noir des États-Unis avec un mandat allant du 20 janvier 2009 au 20 janvier 2017"
                         />
                     </div>
@@ -42,9 +43,9 @@ const CommentJouer = () => {
 
                 <div className="flex gap-8 mb-12">
                     <div className="flex-[1]">
-                        <CartePersonnage
-                            image="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Queen_Elizabeth_II_March_2015.jpg/440px-Queen_Elizabeth_II_March_2015.jpg"
-                            nom="Élisabeth II"
+                        <PersonalityCard
+                            imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Queen_Elizabeth_II_March_2015.jpg/440px-Queen_Elizabeth_II_March_2015.jpg"
+                            name="Élisabeth II"
                             description="Reine du Royaume-Uni ayant régné du 6 février 1952 au 8 septembre 2022."
                         />
                     </div>
@@ -86,9 +87,9 @@ const CommentJouer = () => {
                     </div>
 
                     <div className="flex-[1]">
-                        <CartePersonnage
-                            image="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Karch_Kiraly_2012.jpg/440px-Karch_Kiraly_2012.jpg"
-                            nom="Charles Kiraly"
+                        <PersonalityCard
+                            imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Karch_Kiraly_2012.jpg/440px-Karch_Kiraly_2012.jpg"
+                            name="Charles Kiraly"
                             description="Ancien joueur et entraîneur américain de volley-ball, triple champion olympique."
                         />
                     </div>
@@ -98,17 +99,5 @@ const CommentJouer = () => {
         </>
     );
 };
-
-const CartePersonnage = ({ image, nom, description }: { image: string; nom: string; description: string }) => (
-    <div className="bg-[#21897E] rounded-2xl p-3 w-full">
-        <div className="bg-[#E0E2DB] rounded-xl overflow-hidden">
-            <img src={image} alt={nom} className="w-full h-48 object-cover object-top" />
-            <div className="p-3">
-                <p className="text-[#21897E] font-bold text-center mb-1">{nom}</p>
-                <p className="text-[#21897E] text-sm text-center">{description}</p>
-            </div>
-        </div>
-    </div>
-);
 
 export default CommentJouer;
