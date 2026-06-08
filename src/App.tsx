@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
 import CommentJouer from "./pages/CommentJouer";
-import Jouer from "./pages/Jouer";
+import ChoixMode from "./pages/ChoixMode";
 const App = () => {
 
   const statuts = useArtworkStatus();
@@ -43,7 +43,7 @@ const App = () => {
         <Route path="/admin" element={<Admin/>}></Route>
         <Route path="/connexion" element={<Connexion/>}></Route>
         <Route path="/inscription" element={<Inscription/>}></Route>
-        <Route path="/jouer" element={<Jouer/>}></Route>
+        <Route path="/choixmode" element={<ChoixMode/>}></Route>
         <Route path="/commentjouer" element={<CommentJouer/>}></Route>
         <Route path="*" element={<Page404/>}></Route>
     </Routes>

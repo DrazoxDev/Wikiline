@@ -15,7 +15,7 @@ const Home = () => {
             Wikiline
           </h2>
           <p className="font-soustitre text-2xl">Le seul jeu de carte qui vous fera changer de temporalité.</p>
-          <NavLink key={"/"} to={"jouer"} className={"bg-teal-700 text-white font-bold p-4 rounded-2xl hover:scale-110 transform duration-75"}>{"Commencer à jouer"}</NavLink>
+          <NavLink key={"/"} to={"choixmode"} className={"bg-teal-700 text-white font-bold p-4 rounded-2xl hover:scale-110 transform duration-75"}>{"Commencer à jouer"}</NavLink>
           {/* <ListArtworks artworks={artworks}>
           </ListArtworks> */}
         </section>
@@ -23,5 +23,5 @@ const Home = () => {
     </>
   );
 }
-
+  
 export default Home;
