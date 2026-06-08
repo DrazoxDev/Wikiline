@@ -11,9 +11,9 @@ const navItems = [
 const Header=()=> {
     return (
         <header className="p-4 flex flex-wrap items-center justify-between">
-            <div>
-                <img src="" alt="" />
-                <a href="/" className="text-3xl text-gray-900 mb-4 font-soustitre">Wikiline</a>
+            <div className="flex items-center gap-2">
+                <img className="size-10" src="/src/assets/images/Logo WikiLine.svg" alt="Logo" />
+                <a href="/" className="text-3xl text-gray-900 font-soustitre leading-none">Wikiline</a>
             </div>
             
             <nav className="flex flex-wrap gap-4" aria-label="Navigation principale">
