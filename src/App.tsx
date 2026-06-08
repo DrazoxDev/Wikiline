@@ -11,8 +11,13 @@ import Inscription from "./pages/Inscription";
 import CommentJouer from "./pages/CommentJouer";
 import ChoixMode from "./pages/ChoixMode";
 import PersonTest from "./pages/PersonTest";
+<<<<<<< HEAD
 import Difficulte from "./pages/Difficulte";
 import Game from "./pages/Game";
+=======
+import Difficulte  from "./pages/Difficulte";
+import HubWikilineGacha from "./pages/HubWikilineGacha";
+>>>>>>> dccd3e7ad6c8ff5a5afd72458775b8f432a8de87
 const App = () => {
 
   const statuts = useArtworkStatus();
@@ -50,7 +55,11 @@ const App = () => {
         <Route path="/commentjouer" element={<CommentJouer/>}></Route>
         <Route path="/test-personnes" element={<PersonTest/>}></Route>
         <Route path="/choix_difficulte" element={<Difficulte/>}></Route>
+<<<<<<< HEAD
         <Route path="/jeu" element={<Game/>}></Route>
+=======
+        <Route path="/hubgikilinegacha" element={<HubWikilineGacha/>}></Route>
+>>>>>>> dccd3e7ad6c8ff5a5afd72458775b8f432a8de87
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>
