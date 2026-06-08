@@ -18,18 +18,21 @@ const ChoixMode = () => {
             titre="Mode entrainement" 
             description="Entrainer vous au mode de jeux normal pour pouvoir battre tout les scores" 
             specificitee="Nombre de vies illimitéesPas de temps"
+            couleur="vert"
           />
 
           <ModeDeJeu
             titre="Mode classique" 
             description="Entrainer vous au mode de jeux normal pour pouvoir battre tout les scores" 
             specificitee="Nombre de vie illimitésPas de temps"
+            couleur="blanc"
           />
 
           <ModeDeJeu 
             titre="Mode Wikiline-Gacha" 
             description="Ouvrez des booster de cartes et jouer avec celles obtenues, collectionner les  cartes et obtener le meilleur score" 
             specificitee="Nombre de vie illimitésPas de temps"
+            couleur="vert"
           />
           </div>
 
