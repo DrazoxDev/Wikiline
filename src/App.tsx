@@ -12,6 +12,7 @@ import CommentJouer from "./pages/CommentJouer";
 import ChoixMode from "./pages/ChoixMode";
 import PersonTest from "./pages/PersonTest";
 import Difficulte  from "./pages/Difficulte";
+import HubWikilineGacha from "./pages/HubWikilineGacha";
 const App = () => {
 
   const statuts = useArtworkStatus();
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/commentjouer" element={<CommentJouer/>}></Route>
         <Route path="/test-personnes" element={<PersonTest/>}></Route>
         <Route path="/choix_difficulte" element={<Difficulte/>}></Route>
+        <Route path="/hubgikilinegacha" element={<HubWikilineGacha/>}></Route>
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>
