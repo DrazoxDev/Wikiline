@@ -5,7 +5,7 @@ const CommentJouer = () => {
     return (
         <>
             <Header />
-            <main className="container mx-auto p-4">
+            <section className="container mx-auto p-4">
 
                 <div className="flex flex-col items-center">
                     <h2 className="font-soustitre text-4xl">Explication des règles du jeu</h2>
@@ -95,7 +95,7 @@ const CommentJouer = () => {
                     </div>
                 </div>
 
-            </main>
+            </section>
         </>
     );
 };
