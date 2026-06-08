@@ -31,6 +31,19 @@
   .couleur-blanc{
     color: #E0E2DB;
   }
+  .bg-vert{
+    background-color: #21897E;
+  }
+  .bg-blanc{
+    background-color: #E0E2DB;
+  }
+
+  .bord-vert{
+    border-color: #21897E;
+  }
+  .bord-blanc{
+    border-color: #E0E2DB;
+  }
 
 }
 :root{
