@@ -11,19 +11,22 @@ type CarouselPerson = {
     return (
       <div className="flex flex-col items-center mx-5 shrink-0 w-36 md:w-44">
         <div className="bg-[#ffffff] rounded-3xl w-full shadow-lg overflow-hidden">
-          {person.imageUrl ? (
-            <img
-              src={person.imageUrl}
-              alt={person.name}
-              className="w-full h-44 md:h-52 object-cover object-top"
-              loading="lazy"
-            />
-          ) : (
-            <div className="w-full h-44 md:h-52 flex items-center justify-center bg-[#E0E2DB] text-[#21897E] text-sm">
-              ?
-            </div>
-          )}
+
+            {person.imageUrl ? (
+              <img
+                src={person.imageUrl}
+                alt={person.name}
+                className="w-full h-44 md:h-52 object-cover object-top"
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-44 md:h-52 flex items-center justify-center bg-[#E0E2DB] text-[#21897E] text-sm">
+                ?
+              </div>
+            )}
+  
         </div>
+
         <p className="font-titre text-base md:text-lg mt-3 text-center leading-tight">
           {person.name}
         </p>
