@@ -11,7 +11,8 @@ import Inscription from "./pages/Inscription";
 import CommentJouer from "./pages/CommentJouer";
 import ChoixMode from "./pages/ChoixMode";
 import PersonTest from "./pages/PersonTest";
-import Difficulte  from "./pages/Difficulte";
+import Difficulte from "./pages/Difficulte";
+import Game from "./pages/Game";
 const App = () => {
 
   const statuts = useArtworkStatus();
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/commentjouer" element={<CommentJouer/>}></Route>
         <Route path="/test-personnes" element={<PersonTest/>}></Route>
         <Route path="/choix_difficulte" element={<Difficulte/>}></Route>
+        <Route path="/jeu" element={<Game/>}></Route>
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>

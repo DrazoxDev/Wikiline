@@ -17,25 +17,25 @@ const ChoixMode = () => {
           <ModeDeJeu
             titre="Mode entrainement"
             description="Entrainer vous au mode de jeux normal pour pouvoir battre tout les scores"
-            specificitee="Nombre de vies illimitéesPas de temps"
+            specificitee="Nombre de vies illimitées. Pas de temps."
             couleur="vert"
-            redirection=""
+            gameMode="training"
           />
 
           <ModeDeJeu
             titre="Mode classique"
-            description="Entrainer vous au mode de jeux normal pour pouvoir battre tout les scores"
-            specificitee="Nombre de vie illimitésPas de temps"
+            description="Jouez avec des vies limitées et choisissez votre niveau de difficulté"
+            specificitee="Vies limitées. Timer selon la difficulté."
             couleur="blanc"
-            redirection="choix_difficulte"
+            gameMode="classic"
           />
 
           <ModeDeJeu
             titre="Mode Wikiline-Gacha"
-            description="Ouvrez des booster de cartes et jouer avec celles obtenues, collectionner les  cartes et obtener le meilleur score"
-            specificitee="Nombre de vie illimité. Pas de temps"
+            description="Ouvrez des booster de cartes et jouer avec celles obtenues, collectionner les cartes et obtenir le meilleur score"
+            specificitee="Bientôt disponible"
             couleur="vert"
-            redirection=""
+            gameMode="gacha"
           />
         </div>
 
