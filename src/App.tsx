@@ -15,7 +15,7 @@ import Difficulte from "./pages/Difficulte";
 import Game from "./pages/Game";
 const App = () => {
 
-  ///const statuts = useArtworkStatus();
+  const statuts = useArtworkStatus();
   // const {loadArtworks}= useArtworkActions();
   // useEffect (() => {
   //    loadArtworks();
