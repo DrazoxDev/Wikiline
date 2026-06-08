@@ -6,13 +6,15 @@ type Props = {
   description: string;
   specificitee: string;
   couleur:string;
+  redirection:string
 }
 
-const ModeDeJeu=({titre, description, specificitee, couleur}:Props)=>{
+const ModeDeJeu=({titre, description, specificitee, couleur, redirection}:Props)=>{
     const imageEtoile = couleur === "vert" ? ImageEtoileBlanche : ImageEtoileVerte;
     return(
         <>
-        <div className= {`${couleur === "vert" ? "bg-vert" : "bg-blanc"} border-2 bord-vert rounded-2xl px-6 py-8 w-full flex flex-col justify-between min-h-[180px]`}>
+        <a href={`/${redirection}`}>
+        <div className={`${couleur === "vert" ? "bg-vert" : "bg-blanc"} border-2 bord-vert rounded-2xl px-6 py-8 w-full max-w-[600px] flex flex-col justify-between min-h-[180px]`}>
             <div className="flex items-center justify-between mb-4">
                 <div className="flex gap-3 items-center">
                     <img src={imageEtoile} className="w-15 h-15" alt="" />
@@ -35,6 +37,7 @@ const ModeDeJeu=({titre, description, specificitee, couleur}:Props)=>{
                 </div>
             </div>
         </div>
+        </a>
 
     </>
 
