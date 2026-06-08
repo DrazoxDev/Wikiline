@@ -24,22 +24,15 @@ const PersonTest = () => {
       <main className="container mx-auto p-4">
         <div className="flex flex-col items-center mb-8">
           <h2 className="font-soustitre text-4xl">Test API Wikipédia</h2>
-          <p className="font-soustitre text-lg text-center max-w-2xl mt-2">
-            Chargement de 3 personnalités depuis Wikipédia, avec calcul de
-            popularité et rareté.
-          </p>
+          <p className="font-soustitre text-lg text-center max-w-2xl mt-2">Chargement de 3 personnalités depuis Wikipédia, avec calcul de popularité et rareté.</p>
         </div>
 
         {status === "loading" && (
-          <p className="text-center font-soustitre text-lg">
-            Chargement des personnalités depuis Wikipédia...
-          </p>
+          <p className="text-center font-soustitre text-lg">Chargement des personnalités depuis Wikipédia...</p>
         )}
 
         {status === "error" && (
-          <p className="text-center text-red-600 font-soustitre">
-            Erreur : {error}
-          </p>
+          <p className="text-center text-red-600 font-soustitre">Erreur : {error}</p>
         )}
 
         {status === "success" && (
@@ -51,9 +44,7 @@ const PersonTest = () => {
         )}
 
         {status === "success" && cards.length === 0 && (
-          <p className="text-center font-soustitre">
-            Aucune personnalité n'a pu être chargée.
-          </p>
+          <p className="text-center font-soustitre">Aucune personnalité n'a pu être chargée.</p>
         )}
       </main>
     </>

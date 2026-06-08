@@ -3,7 +3,7 @@ import Header from "../components/Header";
 const Connexion = () => {
     return (
         <>
-            <Header />
+            <Header/>
             <section className="container mx-auto p-4">
                 <div className="flex flex-col items-center">
                     <h2 className="font-soustitre text-4xl">Connexion</h2>
@@ -19,12 +19,12 @@ const Connexion = () => {
                             <div className="flex flex-col gap-4 flex-1">
                                 <div className="flex flex-col gap-2">
                                     <label className="text-[#E0E2DB] font-bold">Rentrez votre mail</label>
-                                    <input type="email" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none"/>
+                                    <input type="email" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none" />
                                 </div>
 
                                 <div className="flex flex-col gap-2">
                                     <label className="text-[#E0E2DB] font-bold">Rentrez votre mot de passe</label>
-                                    <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none"/>
+                                    <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none" />
                                 </div>
                             </div>
 
@@ -33,13 +33,10 @@ const Connexion = () => {
                                     <p className="text-[#21897E] font-bold text-lg text-center">C'est le moment de montrer qui est le boss de wikipedia, montrez nous que vous êtes le GOAT</p>
                                 </div>
                             </div>
-                            
+
                         </div>
 
-                        {/* Bouton valider */}
-                        <button className="w-full border-2 border-[#E0E2DB] text-[#E0E2DB] font-bold text-xl rounded-full py-3 hover:bg-[#E0E2DB] hover:text-[#21897E] transition-colors">
-                            Valider
-                        </button>
+                        <button className="w-full border-2 border-[#E0E2DB] text-[#E0E2DB] font-bold text-xl rounded-full py-3 hover:bg-[#E0E2DB] hover:text-[#21897E] transition-colors">Valider</button>
                     </div>
                 </div>
             </section>

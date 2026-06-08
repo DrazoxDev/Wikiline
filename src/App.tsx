@@ -1,5 +1,4 @@
 import Home from "./pages/Home";
-import Admin from "./pages/Admin";
 import Page404 from "./pages/Page404";
 import MyExpo from "./pages/MyExpo";
 import PrepareExpo from "./pages/ExpoComposer";
@@ -42,7 +41,6 @@ const App = () => {
     <BrowserRouter>
     <Routes>
         <Route path="/" element={<Home/>}></Route>
-        <Route path="/admin" element={<Admin/>}></Route>
         <Route path="/connexion" element={<Connexion/>}></Route>
         <Route path="/inscription" element={<Inscription/>}></Route>
         <Route path="/choixmode" element={<ChoixMode/>}></Route>
