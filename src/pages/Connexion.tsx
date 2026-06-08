@@ -5,10 +5,10 @@ const Connexion = () => {
         <>
             <Header />
             <main className="container mx-auto p-4">
-                <section className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
                     <h2 className="font-soustitre text-4xl">Connexion</h2>
                     <h2 className="text-[#21897E] font-titre text-8xl">WikiLine</h2>
-                </section>
+                </div>
 
                 <section className="container mx-auto p-4">
                     <div className="bg-[#21897E] rounded-2xl p-8 flex flex-col gap-6">
