@@ -4,13 +4,13 @@ const Connexion = () => {
     return (
         <>
             <Header />
-            <main className="container mx-auto p-4">
+            <section className="container mx-auto p-4">
                 <div className="flex flex-col items-center">
                     <h2 className="font-soustitre text-4xl">Connexion</h2>
                     <h2 className="text-[#21897E] font-titre text-8xl">WikiLine</h2>
                 </div>
 
-                <section className="container mx-auto p-4">
+                <div className="container mx-auto p-4">
                     <div className="bg-[#21897E] rounded-2xl p-8 flex flex-col gap-6">
                         <h3 className="text-[#E0E2DB] font-bold text-2xl">Bon retour parmis nous !!</h3>
 
@@ -41,8 +41,8 @@ const Connexion = () => {
                             Valider
                         </button>
                     </div>
-                </section>
-            </main>
+                </div>
+            </section>
         </>
     );
 };
