@@ -11,22 +11,11 @@ import CommentJouer from "./pages/CommentJouer";
 import ChoixMode from "./pages/ChoixMode";
 import PersonTest from "./pages/PersonTest";
 import Difficulte  from "./pages/Difficulte";
+import HubDeJeux from "./pages/HubDeJeux";
 const App = () => {
 
   const statuts = useArtworkStatus();
-  // const {loadArtworks}= useArtworkActions();
-  // useEffect (() => {
-  //    loadArtworks();
-  // },[loadArtworks])
 
-  // if (statuts === "loading" || statuts === "idle") {
-  //   return(
-  //     <div className="flex items-center justify-center h-screen">
-  //       <p className="text-xl">Chargement...</p>
-  //     </div>
-
-  //   )
-  // }
     if (statuts === "error") {
     return(
       <div className="flex items-center justify-center h-screen">
@@ -47,13 +36,13 @@ const App = () => {
         <Route path="/commentjouer" element={<CommentJouer/>}></Route>
         <Route path="/test-personnes" element={<PersonTest/>}></Route>
         <Route path="/choix_difficulte" element={<Difficulte/>}></Route>
+        <Route path="/HubDeJeux" element={<HubDeJeux/>}></Route>
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>
   </>
   )
   }
-  
 };
 
 export default App

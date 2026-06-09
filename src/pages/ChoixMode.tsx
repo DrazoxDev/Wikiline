@@ -9,7 +9,7 @@ const ChoixMode = () => {
 
         <div className="flex flex-col items-center">
           <h2 className="font-soustitre text-4xl">Choix d'un</h2>
-          <h2 className="text-[#21897E] font-titre text-8xl">Mode de jeu</h2>
+          <h2 className="couleur-vert font-titre text-8xl">Mode de jeu</h2>
         </div>
 
         <div className="flex flex-col gap-6 max-w-3xl mx-auto w-full items-center">
@@ -35,7 +35,7 @@ const ChoixMode = () => {
             description="Ouvrez des booster de cartes et jouer avec celles obtenues, collectionner les  cartes et obtener le meilleur score"
             specificitee="Nombre de vie illimité. Pas de temps"
             couleur="vert"
-            redirection=""
+            redirection="HubDeJeux"
           />
         </div>
 
