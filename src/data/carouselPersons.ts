@@ -1,6 +1,6 @@
 /** Personnalités affichées dans le carrousel de la page d'accueil. */
 export const CAROUSEL_PERSON_TITLES = [
-  "Ludwig_van_Beethoven",
+  "Marjane_Satrapi",
   "Michael_Jordan",
   "Wolfgang_Amadeus_Mozart",
   "Simone_Veil",

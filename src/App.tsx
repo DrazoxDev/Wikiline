@@ -1,8 +1,5 @@
 import Home from "./pages/Home";
-import Admin from "./pages/Admin";
 import Page404 from "./pages/Page404";
-import MyExpo from "./pages/MyExpo";
-import PrepareExpo from "./pages/ExpoComposer";
 import { BrowserRouter, Route, Routes} from "react-router";
 import {useArtworkStatus } from "./stores/artwork/artwork.selectors";
 import Connexion from "./pages/Connexion";
