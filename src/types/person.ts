@@ -4,11 +4,11 @@ export type PersonCard = {
   id: string;
   wikipediaTitre: string;
   nom: string;
-  anneeNaissance:string;
+  anneeNaissance?:number;
   description: string;
   imageUrl: string;
   ScorePopularite: number;
-  rareter: Rarete;
+  rarete: Rarete;
   NbrVuPage: number;
   TailleArticle: number;
 };

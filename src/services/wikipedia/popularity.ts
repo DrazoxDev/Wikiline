@@ -1,14 +1,14 @@
-import type { PersonCard, Rarity } from "../../types/person";
+import type { PersonCard} from "../../types/person";
 import type { PersonRawData } from "./wikipedia.types";
-
-const RARITY_THRESHOLDS: { min: number; rarity: Rarity }[] = [
+import type { Rarete } from "../../types/person";
+const RARITY_THRESHOLDS: { min: number; rarity: Rarete }[] = [
   { min: 75, rarity: "legendaire" },
   { min: 50, rarity: "rare" },
   { min: 25, rarity: "peu_commune" },
   { min: 0, rarity: "commune" },
 ];
 
-export function scoreToRarity(score: number): Rarity {
+export function scoreToRarity(score: number): Rarete {
   const match = RARITY_THRESHOLDS.find((threshold) => score >= threshold.min);
   return match?.rarity ?? "commune";
 }
@@ -38,19 +38,19 @@ export function buildPersonCards(rawDataList: PersonRawData[]): PersonCard[] {
 
     return {
       id: raw.wikidataId,
-      wikipediaTitle: raw.wikipediaTitle,
-      name: raw.name,
+      wikipediaTitre: raw.wikipediaTitle,
+      nom: raw.name,
       description: raw.description,
       imageUrl: raw.imageUrl,
-      popularityScore,
-      rarity: scoreToRarity(popularityScore),
-      pageViews: raw.pageViews,
-      articleSize: raw.articleSize,
+      ScorePopularite: popularityScore,
+      rarete: scoreToRarity(popularityScore),
+      NbrVuPage: raw.pageViews,
+      TailleArticle: raw.articleSize,
     };
   });
 }
 
-export const RARITY_LABELS: Record<Rarity, string> = {
+export const RARITY_LABELS: Record<Rarete, string> = {
   commune: "Commune",
   peu_commune: "Peu commune",
   rare: "Rare",
