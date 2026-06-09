@@ -1,14 +1,23 @@
-import type { PersonCard } from "../../types/person";
+import type { PersonCard, Rarete } from "../../types/person";
+import type { Difficulte } from "./difficulteConfig";
 
 export type GameStore = {
-  difficulte: "facile" | "moyen" | "diffcile";
+  difficulte: Difficulte;
   vies: number|null;
-  tempsLimite: number;
-  categorieCarte: string[];
+  tempsLimite: number|null;
+  categorieCarte: Rarete;
 
   timeline:PersonCard[];
-  mainEnCours:number;
+  mainEnCours:PersonCard[];
   deck:PersonCard[];
   vieRestante:number|null;
-  gameStatus:"idle" | "En cours" | "gagner" | "perdu"
+  gameStatus:"idle" | "En cours" | "gagner" | "perdu";
+  actions: GameActions;
+    
 };
+
+export type GameActions = {
+    startGame: (diffculte: Difficulte) => void
+    placerCarte: (carteId: string, position: number) => void
+    resetGame: () =>void
+}
