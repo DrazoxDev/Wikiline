@@ -2,5 +2,5 @@
 export const SAMPLE_PERSON_TITLES = [
   "Barack_Obama",
   "Élisabeth_II",
-  "Karch_Kiraly",
+  "Diego_Maradonna",
 ] as const;

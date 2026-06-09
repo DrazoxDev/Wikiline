@@ -15,23 +15,23 @@ const Inscription = () => {
 
                         <div className="flex flex-col gap-3 flex-1">
 
-                            <div className="flex flex-col items-center gap-1">
-                                <label className="text-[#E0E2DB] font-bold">Choisisez votre Pseudo</label>
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[#E0E2DB] font-bold">Pseudo</label>
                                 <input type="text" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
                             </div>
 
-                            <div className="flex flex-col items-center gap-1">
-                                <label className="text-[#E0E2DB] font-bold">Choisisez votre Mail</label>
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[#E0E2DB] font-bold">Mail</label>
                                 <input type="email" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
                             </div>
 
-                            <div className="flex flex-col items-center gap-1">
-                                <label className="text-[#E0E2DB] font-bold">Choisisez votre Mot de passe</label>
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[#E0E2DB] font-bold">Mot de passe</label>
                                 <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
                             </div>
 
-                            <div className="flex flex-col items-center gap-1">
-                                <label className="text-[#E0E2DB] font-bold">Validez votre Mot de passe</label>
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[#E0E2DB] font-bold">Mot de passe</label>
                                 <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
                             </div>
 

@@ -1,13 +1,14 @@
-export type Rarity = "commune" | "peu_commune" | "rare" | "legendaire";
+export type Rarete = "commune" | "peu_commune" | "rare" | "legendaire";
 
 export type PersonCard = {
   id: string;
-  wikipediaTitle: string;
-  name: string;
+  wikipediaTitre: string;
+  nom: string;
+  anneeNaissance:string;
   description: string;
   imageUrl: string;
-  popularityScore: number;
-  rarity: Rarity;
-  pageViews: number;
-  articleSize: number;
+  ScorePopularite: number;
+  rareter: Rarete;
+  NbrVuPage: number;
+  TailleArticle: number;
 };
