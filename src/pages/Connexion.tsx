@@ -19,12 +19,12 @@ const Connexion = () => {
                             <div className="flex flex-col gap-4 flex-1">
                                 <div className="flex flex-col gap-2">
                                     <label className="text-[#E0E2DB] font-bold">Rentrez votre mail</label>
-                                    <input type="email" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none" />
+                                    <input type="email" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none"/>
                                 </div>
 
                                 <div className="flex flex-col gap-2">
                                     <label className="text-[#E0E2DB] font-bold">Rentrez votre mot de passe</label>
-                                    <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none" />
+                                    <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none"/>
                                 </div>
                             </div>
 

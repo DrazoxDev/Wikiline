@@ -12,18 +12,22 @@ const Inscription = () => {
                 <div className="container mx-auto p-4">
                     <div className="bg-[#21897E] rounded-2xl p-8 flex gap-6">
                         <div className="flex flex-col gap-3 flex-1">
+
                             <div className="flex flex-col items-center gap-1">
                                 <label className="text-[#E0E2DB] font-bold">Choisisez votre Pseudo</label>
                                 <input type="text" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
                             </div>
+
                             <div className="flex flex-col items-center gap-1">
                                 <label className="text-[#E0E2DB] font-bold">Choisisez votre Mail</label>
                                 <input type="email" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
                             </div>
+
                             <div className="flex flex-col items-center gap-1">
                                 <label className="text-[#E0E2DB] font-bold">Choisisez votre Mot de passe</label>
                                 <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
                             </div>
+
                             <div className="flex flex-col items-center gap-1">
                                 <label className="text-[#E0E2DB] font-bold">Validez votre Mot de passe</label>
                                 <input type="password" className="bg-[#E0E2DB] rounded-full px-4 py-2 outline-none w-full" />
