@@ -2,11 +2,12 @@ type Props = {
   titre: string;
   nbretoiles: number;
   specificitee: string[];
+  onClick: () => void;
 }
 
-const ModeDeDifficulte = ({ titre, nbretoiles, specificitee }: Props) => {
+const ModeDeDifficulte = ({ titre, nbretoiles, specificitee, onClick}: Props) => {
   return (
-    <div className="bg-[#21897E] rounded-[2rem] p-3 w-96 min-h-[500px] cursor-pointer hover:scale-105 transition-transform">
+    <div onClick={onClick} className="bg-[#21897E] rounded-[2rem] p-3 w-96 min-h-[500px] cursor-pointer hover:scale-105 transition-transform">
       <div className="bg-[#D9D9C8] rounded-[1.5rem] p-5 h-full min-h-[480px]">
 
         {/* Badge titre */}

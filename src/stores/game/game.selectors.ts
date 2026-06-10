@@ -1,0 +1,21 @@
+import { useGameStore } from './useGameStore';
+
+export const useGameDifficulte = () => useGameStore((state) => state.difficulte)
+
+export const useGameStatus = () => useGameStore((state)=>state.gameStatus)
+
+export const useGameDeck = () => useGameStore((state)=>state.deck)
+
+export const useGameVies = ()=> useGameStore((state)=>state.vies)
+
+export const useGameVieRestante = ()=> useGameStore((state)=> state.vieRestante)
+
+export const useGameTempsLimite = () => useGameStore((state)=>state.tempsLimite)
+
+export const useGameMainEnCours = () => useGameStore((state) => state.mainEnCours)
+
+export const useGameCategorieCarte = () => useGameStore((state)=> state.categorieCarte)
+
+export const useGameTimeline = () => useGameStore((state) => state.timeline)
+
+export const useGameActions = () => useGameStore((state) => state.actions)
