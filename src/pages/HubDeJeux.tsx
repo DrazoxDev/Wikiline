@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 
 const HubDeJeux = () => {
-
     return (
         <>
             <Header />
