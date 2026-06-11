@@ -4,6 +4,7 @@ import { DIFFICULTE_CONFIG } from "./difficulteConfig";
 import type { Difficulte } from "./difficulteConfig";
 import type { PersonCard } from "../../types/person";
 import { fetchRandomPersons } from "../../services/wikipedia/wikidata.sparql";
+import { MOCK_PERSONS } from "../../data/mockPersons";
 
 function melangerTableau<T>(tableau: T[]): T[] {
   const copie = [...tableau];
@@ -56,8 +57,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
         const config = DIFFICULTE_CONFIG[difficulte];
 
         // Charge 6 cartes aléatoires depuis Wikipedia
-        const toutesLesCartes = await fetchRandomPersons(6);
-        const deckMelange = melangerTableau(toutesLesCartes);
+        const toutesLesCartes = [...MOCK_PERSONS]; const deckMelange = melangerTableau(toutesLesCartes);
 
         // 1ère carte sur la timeline, 5 suivantes en main
         const [carteDepart, ...reste] = deckMelange;
