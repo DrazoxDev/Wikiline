@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { PersonCard } from "../../types/person";
 
 type CarteJeuProps = {
@@ -9,16 +9,23 @@ type CarteJeuProps = {
 
 const CarteJeu = ({ carte, isInHand = false }: CarteJeuProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData("carteId", carte.id);
     e.dataTransfer.effectAllowed = "move";
+
+    // Utilise le DOM réel de la carte comme image de drag
+    if (cardRef.current) {
+      e.dataTransfer.setDragImage(cardRef.current, 80, 120);
+    }
   };
 
-  // Carte en main : pas de flip, pas de description, draggable
+  // Carte en main : draggable
   if (isInHand) {
     return (
       <div
+        ref={cardRef}
         draggable
         onDragStart={handleDragStart}
         className="relative w-40 h-60 cursor-grab active:cursor-grabbing shrink-0"

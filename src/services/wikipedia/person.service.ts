@@ -9,9 +9,13 @@ import {
 } from "./wikipedia.api";
 import { areHumans, fetchBirthYears } from "./wikidata.api";
 
+// Fonction utilitaire pour forcer une pause
+const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 async function fetchPersonRawData(
   wikipediaTitle: string
 ): Promise<PersonRawData> {
+  // On garde le Promise.all ici car pour un seul article, les 4 requêtes passent sans problème
   const [summary, wikidataId, pageViews, articleSize] = await Promise.all([
     fetchPersonSummary(wikipediaTitle),
     fetchWikibaseId(wikipediaTitle),
@@ -33,20 +37,35 @@ async function fetchPersonRawData(
 export async function fetchPersonCards(
   wikipediaTitles: string[]
 ): Promise<PersonCard[]> {
-  const results = await Promise.allSettled(
-    wikipediaTitles.map((title) => fetchPersonRawData(title))
-  );
+  const rawDataList: PersonRawData[] = [];
 
-  const rawDataList: PersonRawData[] = results
-    .filter(
-      (r): r is PromiseFulfilledResult<PersonRawData> =>
-        r.status === "fulfilled"
-    )
-    .map((r) => r.value);
+  // BOUCLE SÉQUENTIELLE : On traite les articles 1 par 1 pour éliminer définitivement l'erreur 429
+  for (const title of wikipediaTitles) {
+    try {
+      const data = await fetchPersonRawData(title);
+      
+      // On vérifie qu'on a bien récupéré l'ID Wikidata pour éviter les crashs plus bas
+      if (data && data.wikidataId) {
+        rawDataList.push(data);
+      }
+      
+      // Une pause de 150ms entre chaque personnage pour lisser le trafic global
+      await delay(150);
+    } catch (error) {
+      // Si un article échoue à cause d'une 429 résiduelle ou autre, on ne fait pas crasher tout le jeu
+      console.warn(`Erreur lors de la récupération de "${title}":`, error);
+    }
+  }
+
+  // Si aucun personnage n'a pu être chargé, on s'arrête là
+  if (rawDataList.length === 0) return [];
 
   const wikidataIds = rawDataList.map((r) => r.wikidataId);
 
-  // Récupère humains et années de naissance en parallèle
+  // Petite pause de sécurité avant d'attaquer Wikidata qui commençait à saturer aussi
+  await delay(200);
+
+  // Récupère si ce sont des humains et leurs années de naissance
   const [humanMap, birthYearMap] = await Promise.all([
     areHumans(wikidataIds),
     fetchBirthYears(wikidataIds),

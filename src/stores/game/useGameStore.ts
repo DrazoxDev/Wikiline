@@ -49,18 +49,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
   actions: {
 
     startGame: async (difficulte: Difficulte) => {
-      // Passe en chargement le temps de récupérer les cartes
       set({ gameStatus: "chargement" });
 
       try {
         const config = DIFFICULTE_CONFIG[difficulte];
 
-        // Charge 6 cartes aléatoires depuis Wikipedia
-        // Dans useGameStore.ts, startGame :
-        console.log("Début fetchRandomPersons");
-        const toutesLesCartes = await fetchRandomPersons(15);
-        console.log("Cartes récupérées :", toutesLesCartes.length, toutesLesCartes); const deckMelange = melangerTableau(toutesLesCartes);
-        // 1ère carte sur la timeline, 5 suivantes en main
+        const toutesLesCartes = await fetchRandomPersons(15, config.niveauPopularite);
+        const deckMelange = melangerTableau(toutesLesCartes);
+
         const [carteDepart, ...reste] = deckMelange;
         const main = reste.slice(0, 5);
         const deck = reste.slice(5);
@@ -91,40 +87,40 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
       const nouvelleMain = mainEnCours.filter((c) => c.id !== carteId);
 
-      const [nouvelleCarte, ...nouveauDeck] = deck;
-      const mainAvecPioche = nouvelleCarte
-        ? [...nouvelleMain, nouvelleCarte]
-        : nouvelleMain;
-
       if (estBienPlacee(timeline, carte, position)) {
+        // ✅ Bonne position : on place la carte, on NE pioche PAS
         const nouvelleTimeline = [
           ...timeline.slice(0, position),
           carte,
           ...timeline.slice(position),
         ];
 
+        // Victoire si la main est maintenant vide
+        const gameStatus = nouvelleMain.length === 0 ? "gagner" : "En cours";
+
         set({
           timeline: nouvelleTimeline,
-          mainEnCours: mainAvecPioche,
-          deck: nouveauDeck,
+          mainEnCours: nouvelleMain,
+          gameStatus,
         });
-
-        if (mainAvecPioche.length === 0) {
-          set({ gameStatus: "gagner" });
-        }
 
       } else {
+        // ❌ Mauvaise position : on défausse la carte et on pioche
+        const [nouvelleCarte, ...nouveauDeck] = deck;
+        const mainApresPioche = nouvelleCarte
+          ? [...nouvelleMain, nouvelleCarte]
+          : nouvelleMain;
+
         const nouvellesVies = vieRestante !== null ? vieRestante - 1 : null;
+        const gameStatus =
+          nouvellesVies !== null && nouvellesVies <= 0 ? "perdu" : "En cours";
 
         set({
-          mainEnCours: mainAvecPioche,
+          mainEnCours: mainApresPioche,
           deck: nouveauDeck,
           vieRestante: nouvellesVies,
+          gameStatus,
         });
-
-        if (nouvellesVies !== null && nouvellesVies <= 0) {
-          set({ gameStatus: "perdu" });
-        }
       }
     },
 
@@ -142,4 +138,4 @@ export const useGameStore = create<GameStore>((set, get) => ({
       });
     },
   },
-}));
+}));  
