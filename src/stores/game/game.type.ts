@@ -9,7 +9,6 @@ export type GameStore = {
 
   timeline: PersonCard[];
   mainEnCours: PersonCard[];
-  deck: PersonCard[];
   vieRestante: number | null;
   gameStatus: "idle" | "chargement" | "En cours" | "gagner" | "perdu";
   actions: GameActions;

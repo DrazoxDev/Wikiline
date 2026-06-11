@@ -4,8 +4,6 @@ export const useGameDifficulte = () => useGameStore((state) => state.difficulte)
 
 export const useGameStatus = () => useGameStore((state)=>state.gameStatus)
 
-export const useGameDeck = () => useGameStore((state)=>state.deck)
-
 export const useGameVies = ()=> useGameStore((state)=>state.vies)
 
 export const useGameVieRestante = ()=> useGameStore((state)=> state.vieRestante)

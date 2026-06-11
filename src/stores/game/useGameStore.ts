@@ -54,12 +54,11 @@ export const useGameStore = create<GameStore>((set, get) => ({
       try {
         const config = DIFFICULTE_CONFIG[difficulte];
 
-        const toutesLesCartes = await fetchRandomPersons(15, config.niveauPopularite);
+        const toutesLesCartes = await fetchRandomPersons(15);
         const deckMelange = melangerTableau(toutesLesCartes);
 
         const [carteDepart, ...reste] = deckMelange;
-        const main = reste.slice(0, 5);
-        const deck = reste.slice(5);
+
 
         set({
           difficulte,
@@ -68,8 +67,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
           categorieCarte: config.niveauPopularite,
           vieRestante: config.vies,
           timeline: carteDepart ? [carteDepart] : [],
-          mainEnCours: main,
-          deck,
+          mainEnCours: reste,
           gameStatus: "En cours",
         });
 
@@ -79,8 +77,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
       }
     },
 
-    placerCarte: (carteId: string, position: number) => {
-      const { mainEnCours, timeline, deck, vieRestante } = get();
+    placerCarte: async (carteId: string, position: number) => {
+      const { mainEnCours, timeline, vieRestante } = get();
 
       const carte = mainEnCours.find((c) => c.id === carteId);
       if (!carte) return;
@@ -105,22 +103,31 @@ export const useGameStore = create<GameStore>((set, get) => ({
         });
 
       } else {
-        // ❌ Mauvaise position : on défausse la carte et on pioche
-        const [nouvelleCarte, ...nouveauDeck] = deck;
-        const mainApresPioche = nouvelleCarte
-          ? [...nouvelleMain, nouvelleCarte]
-          : nouvelleMain;
+        try {
+          const nouvellesCartes = await fetchRandomPersons(1);
+          const nouvelleCarte = nouvellesCartes[0];
 
-        const nouvellesVies = vieRestante !== null ? vieRestante - 1 : null;
-        const gameStatus =
-          nouvellesVies !== null && nouvellesVies <= 0 ? "perdu" : "En cours";
+          const mainApresPioche = nouvelleCarte
+            ? [...nouvelleMain, nouvelleCarte]
+            : nouvelleMain;
 
-        set({
-          mainEnCours: mainApresPioche,
-          deck: nouveauDeck,
-          vieRestante: nouvellesVies,
-          gameStatus,
-        });
+          const nouvellesVies =
+            vieRestante !== null ? vieRestante - 1 : null;
+
+          const gameStatus =
+            nouvellesVies !== null && nouvellesVies <= 0
+              ? "perdu"
+              : "En cours";
+
+          set({
+            mainEnCours: mainApresPioche,
+            vieRestante: nouvellesVies,
+            gameStatus,
+          });
+
+        } catch (error) {
+          console.error("Erreur lors de la pioche :", error);
+        }
       }
     },
 
@@ -132,7 +139,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
         categorieCarte: "legendaire",
         timeline: [],
         mainEnCours: [],
-        deck: [],
         vieRestante: null,
         gameStatus: "idle",
       });
