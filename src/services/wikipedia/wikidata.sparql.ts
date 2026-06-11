@@ -17,7 +17,7 @@ const buildQuery = (count: number): string => `
 
 export async function fetchRandomPersons(count: number): Promise<PersonCard[]> {
   const query = buildQuery(count);
-  const url = `${SPARQL_ENDPOINT}?query=${encodeURIComponent(query)}&format=json`;
+  const url = `${SPARQL_ENDPOINT}?query=${encodeURIComponent(query)}&format=json&origin=*`;
 
   const res = await fetch(url, {
     headers: {
@@ -39,5 +39,5 @@ export async function fetchRandomPersons(count: number): Promise<PersonCard[]> {
     throw new Error("Aucune personnalité trouvée");
   }
 
-  return fetchPersonCards(titres);
-}
+console.log("Titres SPARQL :", titres);
+return fetchPersonCards(titres);}
