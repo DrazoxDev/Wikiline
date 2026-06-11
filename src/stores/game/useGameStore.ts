@@ -56,9 +56,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
         const config = DIFFICULTE_CONFIG[difficulte];
 
         // Charge 6 cartes aléatoires depuis Wikipedia
-        const toutesLesCartes = await fetchRandomPersons(6);
-        const deckMelange = melangerTableau(toutesLesCartes);
-
+        // Dans useGameStore.ts, startGame :
+        console.log("Début fetchRandomPersons");
+        const toutesLesCartes = await fetchRandomPersons(15);
+        console.log("Cartes récupérées :", toutesLesCartes.length, toutesLesCartes); const deckMelange = melangerTableau(toutesLesCartes);
         // 1ère carte sur la timeline, 5 suivantes en main
         const [carteDepart, ...reste] = deckMelange;
         const main = reste.slice(0, 5);
