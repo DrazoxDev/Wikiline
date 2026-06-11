@@ -3,21 +3,21 @@ import type { Difficulte } from "./difficulteConfig";
 
 export type GameStore = {
   difficulte: Difficulte;
-  vies: number|null;
-  tempsLimite: number|null;
+  vies: number | null;
+  tempsLimite: number | null;
   categorieCarte: Rarete;
 
-  timeline:PersonCard[];
-  mainEnCours:PersonCard[];
-  deck:PersonCard[];
-  vieRestante:number|null;
-  gameStatus:"idle" | "chargement" |"En cours" | "gagner" | "perdu";
+  timeline: PersonCard[];
+  mainEnCours: PersonCard[];
+  deck: PersonCard[];
+  vieRestante: number | null;
+  gameStatus: "idle" | "chargement" | "En cours" | "gagner" | "perdu";
   actions: GameActions;
-    
+
 };
 
 export type GameActions = {
-    startGame: (diffculte: Difficulte) => void
-    placerCarte: (carteId: string, position: number) => void
-    resetGame: () =>void
+  startGame: (difficulte: Difficulte) => Promise<void>    
+  placerCarte: (carteId: string, position: number) => void
+  resetGame: () => void
 }
