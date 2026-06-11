@@ -11,7 +11,7 @@ export type GameStore = {
   mainEnCours:PersonCard[];
   deck:PersonCard[];
   vieRestante:number|null;
-  gameStatus:"idle" | "En cours" | "gagner" | "perdu";
+  gameStatus:"idle" | "chargement" |"En cours" | "gagner" | "perdu";
   actions: GameActions;
     
 };

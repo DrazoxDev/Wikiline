@@ -2,7 +2,7 @@
 export const CAROUSEL_PERSON_TITLES = [
   "Marjane_Satrapi",
   "Michael_Jordan",
-  "Wolfgang_Amadeus_Mozart",
+  "Andrew_Garfield",
   "Simone_Veil",
   "Barack_Obama",
   "Marie_Curie",
