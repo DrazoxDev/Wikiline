@@ -7,7 +7,7 @@ const [isFlipped, setIsFlipped] = useState(false);
         <>
         {
 
-<div
+        <div
             className="absolute top-0 right-0 w-52 h-72 cursor-pointer"
             onClick={() => setIsFlipped(!isFlipped)}
         >
