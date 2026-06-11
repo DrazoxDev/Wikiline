@@ -8,6 +8,7 @@ const buildQuery = (count: number): string => `
     ?person wdt:P31 wd:Q5.
     ?article schema:about ?person;
              schema:inLanguage "fr";
+             schema:isPartOf <https://fr.wikipedia.org/>;
              schema:name ?articleName.
   }
   ORDER BY RAND()
@@ -30,16 +31,13 @@ export async function fetchRandomPersons(count: number): Promise<PersonCard[]> {
 
   const data = await res.json();
 
-  // On extrait les titres Wikipedia depuis la réponse SPARQL
   const titres: string[] = data.results.bindings
     .map((binding: { articleName: { value: string } }) => binding.articleName.value)
-    .filter((titre: string) => !titre.includes(" ")) // filtre les titres avec espaces qui posent problème
-    .map((titre: string) => titre.replace(/_/g, " ")); // remplace les _ par des espaces
+    .filter((titre: string) => titre.length > 0);
 
   if (titres.length === 0) {
     throw new Error("Aucune personnalité trouvée");
   }
 
-  // On réutilise fetchPersonCards que tu as déjà
   return fetchPersonCards(titres);
 }
