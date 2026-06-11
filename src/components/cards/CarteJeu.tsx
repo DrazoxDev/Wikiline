@@ -20,11 +20,11 @@ const CarteJeu = ({ carte }: { carte: PersonCard }) => {
                         <div className="absolute inset-0 [backface-visibility:hidden]">
                             <div className="bg-[#21897E] rounded-[2rem] p-[3px] h-full">
                                 <div className="bg-white rounded-[1.8rem] overflow-hidden h-full">
-                                    <img
+                                   {carte.imageUrl && <img
                                         src={carte.imageUrl}
                                         alt={carte.nom}
                                         className="w-full h-40 object-cover"
-                                    />
+                                    />}
 
                                     <div className="p-3 text-center">
                                         <p className="font-titre text-[#21897E] text-base">
@@ -42,11 +42,11 @@ const CarteJeu = ({ carte }: { carte: PersonCard }) => {
                         <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]">
                             <div className="bg-[#21897E] rounded-[2rem] p-[3px] h-full">
                                 <div className="bg-white rounded-[1.8rem] overflow-hidden h-full flex flex-col">
-                                    <img
+                                    {carte.imageUrl && <img
                                         src={carte.imageUrl}
                                         alt={carte.nom}
                                         className="w-full h-40 object-cover"
-                                    />
+                                    />}
 
                                     <div className="flex-1 flex flex-col justify-center items-center p-3">
                                         <p className="font-titre text-[#21897E] text-base">

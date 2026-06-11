@@ -7,7 +7,7 @@ import {
   fetchPersonSummary,
   fetchWikibaseId,
 } from "./wikipedia.api";
-import { isHuman } from "./wikidata.api";
+import { areHumans } from "./wikidata.api";
 
 async function fetchPersonRawData(wikipediaTitle: string): Promise<PersonRawData> {
   const [summary, wikidataId, pageViews, articleSize] = await Promise.all([
@@ -16,11 +16,6 @@ async function fetchPersonRawData(wikipediaTitle: string): Promise<PersonRawData
     fetchPageViews(wikipediaTitle),
     fetchArticleSize(wikipediaTitle),
   ]);
-
-  const human = await isHuman(wikidataId);
-  if (!human) {
-    throw new Error(`${wikipediaTitle} n'est pas une personne humaine`);
-  }
 
   return {
     wikipediaTitle,
@@ -40,25 +35,16 @@ export async function fetchPersonCards(
     wikipediaTitles.map((title) => fetchPersonRawData(title)),
   );
 
-  const rawDataList: PersonRawData[] = [];
-  const errors: string[] = [];
+  const rawDataList: PersonRawData[] = results
+    .filter((r): r is PromiseFulfilledResult<PersonRawData> => r.status === "fulfilled")
+    .map((r) => r.value);
 
-  results.forEach((result, index) => {
-    if (result.status === "fulfilled") {
-      rawDataList.push(result.value);
-    } else {
-      const message =
-        result.reason instanceof Error
-          ? result.reason.message
-          : String(result.reason);
-      errors.push(`${wikipediaTitles[index]} : ${message}`);
-    }
-  });
+  // Une seule requête pour vérifier tous les humains d'un coup
+  const wikidataIds = rawDataList.map(r => r.wikidataId);
+  const humanMap = await areHumans(wikidataIds);
 
-  if (errors.length > 0) {
-    console.warn("Certaines personnalités n'ont pas pu être chargées :", errors);
-  }
+  const humanData = rawDataList.filter(r => humanMap[r.wikidataId]);
 
-  const cards = buildPersonCards(rawDataList);
-  return cards.sort((a, b) => b.popularityScore - a.popularityScore);
+  const cards = buildPersonCards(humanData);
+  return cards.sort((a, b) => b.ScorePopularite - a.ScorePopularite);
 }

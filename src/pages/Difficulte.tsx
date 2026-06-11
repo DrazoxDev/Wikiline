@@ -22,19 +22,19 @@ const Difficulte = () => {
                         titre="Facile"
                         nbretoiles={1}
                         specificitee={["5 vies", "Pas de temps", "Personnalité connue"]}
-                        onClick={async() =>{ startGame("facile"); navigate("/game"); }}
+                        onClick={async() =>{startGame("facile"); navigate("/game"); }}
                     />
                     <ModeDeDifficulte
                         titre="Moyen"
                         nbretoiles={3}
                         specificitee={["4 vies", "1min par essais", "Personnalité moyennement connue"]}
-                        onClick={async() => { startGame("moyen"); navigate("/game"); }}
+                        onClick={async() => {startGame("moyen"); navigate("/game"); }}
                     />
                     <ModeDeDifficulte
                         titre="Difficile"
                         nbretoiles={5}
                         specificitee={["3 vies", "10sec par essais", "Personnalité peu connue"]}
-                        onClick={async () => { startGame("difficile"); navigate("/game"); }}
+                        onClick={async () => {startGame("difficile"); navigate("/game"); }}
                     />
                 </div>
 
