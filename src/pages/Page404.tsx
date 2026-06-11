@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import img404 from "../assets/images/404.webp";
+import img404 from "../../public/images/404.webp";
 
 const Page404 = () => {
   return (

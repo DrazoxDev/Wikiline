@@ -7,9 +7,11 @@ import {
   fetchPersonSummary,
   fetchWikibaseId,
 } from "./wikipedia.api";
-import { areHumans } from "./wikidata.api";
+import { areHumans, fetchBirthYears } from "./wikidata.api";
 
-async function fetchPersonRawData(wikipediaTitle: string): Promise<PersonRawData> {
+async function fetchPersonRawData(
+  wikipediaTitle: string
+): Promise<PersonRawData> {
   const [summary, wikidataId, pageViews, articleSize] = await Promise.all([
     fetchPersonSummary(wikipediaTitle),
     fetchWikibaseId(wikipediaTitle),
@@ -29,22 +31,36 @@ async function fetchPersonRawData(wikipediaTitle: string): Promise<PersonRawData
 }
 
 export async function fetchPersonCards(
-  wikipediaTitles: string[],
+  wikipediaTitles: string[]
 ): Promise<PersonCard[]> {
   const results = await Promise.allSettled(
-    wikipediaTitles.map((title) => fetchPersonRawData(title)),
+    wikipediaTitles.map((title) => fetchPersonRawData(title))
   );
 
   const rawDataList: PersonRawData[] = results
-    .filter((r): r is PromiseFulfilledResult<PersonRawData> => r.status === "fulfilled")
+    .filter(
+      (r): r is PromiseFulfilledResult<PersonRawData> =>
+        r.status === "fulfilled"
+    )
     .map((r) => r.value);
 
-  // Une seule requête pour vérifier tous les humains d'un coup
-  const wikidataIds = rawDataList.map(r => r.wikidataId);
-  const humanMap = await areHumans(wikidataIds);
+  const wikidataIds = rawDataList.map((r) => r.wikidataId);
 
-  const humanData = rawDataList.filter(r => humanMap[r.wikidataId]);
+  // Récupère humains et années de naissance en parallèle
+  const [humanMap, birthYearMap] = await Promise.all([
+    areHumans(wikidataIds),
+    fetchBirthYears(wikidataIds),
+  ]);
+
+  const humanData = rawDataList.filter((r) => humanMap[r.wikidataId]);
 
   const cards = buildPersonCards(humanData);
-  return cards.sort((a, b) => b.ScorePopularite - a.ScorePopularite);
+
+  // Injecte l'année de naissance dans chaque carte
+  const cardsWithBirth = cards.map((card) => ({
+    ...card,
+    anneeNaissance: birthYearMap[card.id],
+  }));
+
+  return cardsWithBirth.sort((a, b) => b.ScorePopularite - a.ScorePopularite);
 }

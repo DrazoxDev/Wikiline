@@ -1,5 +1,5 @@
-import ImageEtoileVerte from "../assets/images/etoile_verte.png";
-import ImageEtoileBlanche from "../assets/images/etoile_blanche.png"
+import ImageEtoileVerte from "../../public/images/etoile_verte.png";
+import ImageEtoileBlanche from "../../public/images/etoile_blanche.png";    
 
 type Props = {
   titre: string;
