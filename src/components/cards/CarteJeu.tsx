@@ -21,8 +21,8 @@ const CarteJeu = ({ carte }: { carte: PersonCard }) => {
                             <div className="bg-[#21897E] rounded-[2rem] p-[3px] h-full">
                                 <div className="bg-white rounded-[1.8rem] overflow-hidden h-full">
                                     <img
-                                        src="https://upload.wikimedia.org/wikipedia/commons/3/35/Pierre_Niney_Cannes_2016.jpg"
-                                        alt="Pierre Niney"
+                                        src={carte.imageUrl}
+                                        alt={carte.nom}
                                         className="w-full h-40 object-cover"
                                     />
 
@@ -43,8 +43,8 @@ const CarteJeu = ({ carte }: { carte: PersonCard }) => {
                             <div className="bg-[#21897E] rounded-[2rem] p-[3px] h-full">
                                 <div className="bg-white rounded-[1.8rem] overflow-hidden h-full flex flex-col">
                                     <img
-                                        src="https://upload.wikimedia.org/wikipedia/commons/3/35/Pierre_Niney_Cannes_2016.jpg"
-                                        alt="Pierre Niney"
+                                        src={carte.imageUrl}
+                                        alt={carte.nom}
                                         className="w-full h-40 object-cover"
                                     />
 
