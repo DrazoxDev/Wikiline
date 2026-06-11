@@ -6,4 +6,4 @@ const CarteJeu = () => {
     )
 }
 
-export default CarteJeu;
+export default CarteJeu; 
