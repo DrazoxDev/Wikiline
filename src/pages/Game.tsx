@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import { useGameMainEnCours, useGameStatus, useGameTimeline, useGameVieRestante } from "../stores/game/game.selectors";
+import CarteJeu from '../components/cards/CarteJeu';
 
 const Game = () => {
     const gameStatus = useGameStatus();
@@ -17,6 +18,7 @@ const Game = () => {
                 <p>Vies restantes : {vieRestante ?? "illimitées"}</p>
                 <p>Cartes sur la timeline : {timeline.length}</p>
                 <p>Cartes en main : {mainEnCours.length}</p>
+                <CarteJeu/>
             </main>
         </>
     );

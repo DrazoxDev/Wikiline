@@ -74,4 +74,4 @@ const [isFlipped, setIsFlipped] = useState(false);
     )
 }
 
-export default CarteJeu;
+export default CarteJeu; 
