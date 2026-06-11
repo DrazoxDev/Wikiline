@@ -9,6 +9,7 @@ import ChoixMode from "./pages/ChoixMode";
 import PersonTest from "./pages/PersonTest";
 import Difficulte  from "./pages/Difficulte";
 import HubDeJeux from "./pages/HubDeJeux";
+import VosCartes from "./pages/VosCartes";
 const App = () => {
 
   const statuts = useArtworkStatus();
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/test-personnes" element={<PersonTest/>}></Route>
         <Route path="/choix_difficulte" element={<Difficulte/>}></Route>
         <Route path="/HubDeJeux" element={<HubDeJeux/>}></Route>
+        <Route path="/VosCartes" element={<VosCartes/>}></Route>        
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>
