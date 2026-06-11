@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import imageBooster from "../assets/images/BoosterDeBase.png";
+import imageBooster from "../../public/images/BoosterDeBase.png";
 
 const Booster = () => {
   return (
