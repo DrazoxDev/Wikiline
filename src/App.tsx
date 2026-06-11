@@ -10,6 +10,7 @@ import PersonTest from "./pages/PersonTest";
 import Difficulte  from "./pages/Difficulte";
 import HubDeJeux from "./pages/HubDeJeux";
 import Game from "./pages/Game";
+import Booster from "./pages/Boosteur";
 const App = () => {
 
   const statuts = useArtworkStatus();
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/choix_difficulte" element={<Difficulte/>}></Route>
         <Route path="/HubDeJeux" element={<HubDeJeux/>}></Route>
         <Route path="/game" element={<Game/>}></Route>
+        <Route path="/Booster" element={<Booster/>}></Route>
         <Route path="*" element={<Page404/>}></Route>
     </Routes>
     </BrowserRouter>
