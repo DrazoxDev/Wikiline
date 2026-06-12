@@ -1,7 +1,7 @@
-import type { PersonCard, Rarity } from "../../types/person";
+import type { PersonCard, Rarete } from "../../types/person";
 import { RARITY_LABELS } from "../../services/wikipedia";
 
-const RARITY_STYLES: Record<Rarity, string> = {
+const RARITY_STYLES: Record<Rarete, string> = {
   commune: "bg-gray-500",
   peu_commune: "bg-blue-500",
   rare: "bg-purple-600",
@@ -12,7 +12,7 @@ type PersonalityCardProps = {
   name: string;
   description: string;
   imageUrl: string;
-  rarity?: Rarity;
+  rarity?: Rarete;
   popularityScore?: number;
 };
 
@@ -63,11 +63,11 @@ export function PersonalityCard({
 export function PersonalityCardFromData({ card }: { card: PersonCard }) {
   return (
     <PersonalityCard
-      name={card.name}
+      name={card.nom}
       description={card.description}
       imageUrl={card.imageUrl}
-      rarity={card.rarity}
-      popularityScore={card.popularityScore}
+      rarity={card.rarete}
+      popularityScore={card.ScorePopularite}
     />
   );
 }
