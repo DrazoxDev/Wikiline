@@ -5,9 +5,11 @@ import {
   useGameTimeline,
   useGameVieRestante,
   useGameActions,
+  useLastPlacementResult,
 } from "../stores/game/game.selectors";
 import { useNavigate } from "react-router";
 import CarteJeu from "../components/cards/CarteJeu";
+import { useState } from "react";
 
 /** Zone de dépôt entre deux cartes (ou aux extrémités) de la timeline */
 const DropZone = ({
@@ -52,14 +54,13 @@ const DropZone = ({
   );
 };
 
-import { useState } from "react";
-
 const Game = () => {
   const gameStatus = useGameStatus();
   const vieRestante = useGameVieRestante();
   const timeline = useGameTimeline();
   const mainEnCours = useGameMainEnCours();
   const { placerCarte } = useGameActions();
+  const lastPlacementResult = useLastPlacementResult();
   const navigate = useNavigate();
 
   if (gameStatus === "idle") {
@@ -130,9 +131,37 @@ const Game = () => {
     );
   }
 
+  // Classe du flash selon le résultat du dernier placement
+  const flashClass =
+    lastPlacementResult === "correct"
+      ? "ring-4 ring-green-400 ring-offset-2 bg-green-400/10"
+      : lastPlacementResult === "incorrect"
+      ? "ring-4 ring-red-400 ring-offset-2 bg-red-400/10"
+      : "";
+
+  // Icône feedback flottante
+  const feedbackIcon =
+    lastPlacementResult === "correct"
+      ? "✅"
+      : lastPlacementResult === "incorrect"
+      ? "❌"
+      : null;
+
   return (
     <>
       <Header />
+
+      {/* Overlay de flash plein écran (très léger, juste une teinte) */}
+      <div
+        className={`fixed inset-0 pointer-events-none z-50 transition-all duration-300 ${
+          lastPlacementResult === "correct"
+            ? "bg-green-400/15"
+            : lastPlacementResult === "incorrect"
+            ? "bg-red-400/15"
+            : "bg-transparent"
+        }`}
+      />
+
       <main className="flex flex-col h-[calc(100vh-80px)]">
 
         {/* Barre d'infos */}
@@ -145,9 +174,25 @@ const Game = () => {
           </p>
         </div>
 
-        {/* Zone timeline */}
-        <div className="flex-1 flex flex-col items-center justify-center gap-2 px-6">
-          <p className="font-soustitre text-gray-400 text-sm">— Timeline — (cliquez sur une carte pour voir la date)</p>
+        {/* Zone timeline avec flash sur le contour */}
+        <div
+          className={`flex-1 flex flex-col items-center justify-center gap-2 px-6 rounded-2xl mx-4 transition-all duration-300 ${flashClass}`}
+        >
+          {/* Icône feedback centré */}
+          {feedbackIcon && (
+            <div
+              className={`text-5xl animate-bounce transition-opacity duration-300 ${
+                lastPlacementResult ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {feedbackIcon}
+            </div>
+          )}
+
+          <p className="font-soustitre text-gray-400 text-sm">
+            — Timeline — (cliquez sur une carte pour voir la date)
+          </p>
+
           <div className="flex gap-0 items-center flex-wrap justify-center overflow-x-auto pb-2 max-w-full">
             {/* Drop zone avant la première carte */}
             <DropZone position={0} onDrop={placerCarte} />
