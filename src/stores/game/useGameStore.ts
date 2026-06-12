@@ -3,7 +3,7 @@ import type { GameStore } from "./game.type";
 import { DIFFICULTE_CONFIG } from "./difficulteConfig";
 import type { Difficulte } from "./difficulteConfig";
 import type { PersonCard } from "../../types/person";
-import { fetchRandomPersons } from "../../services/wikipedia/wikidata.sparql";
+import { fetchPersonsByDifficulty } from "../../services/wikipedia/difficultyPersons.service";
 
 function melangerTableau<T>(tableau: T[]): T[] {
   const copie = [...tableau];
@@ -47,12 +47,12 @@ type GameStoreInternal = GameStore & {
 
 export const useGameStore = create<GameStoreInternal>((set, get) => {
   // Fonction interne pour pré-charger des cartes en arrière-plan
-  async function refillDeckReserve() {
+  async function refillDeckReserve(difficulte: Difficulte) {
     const { deckReserve } = get();
     const existingIds = new Set([...deckReserve].map((c) => c.id));
 
     try {
-      const nouvelles = await fetchRandomPersons(DECK_RESERVE_SIZE);
+      const nouvelles = await fetchPersonsByDifficulty(difficulte, DECK_RESERVE_SIZE);
       const sansDuplicates = nouvelles.filter((c) => !existingIds.has(c.id));
 
       set((state) => ({
@@ -64,7 +64,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
   }
 
   // Pioche une carte depuis la réserve (et recharge si nécessaire)
-  function piocherDepuisReserve(): PersonCard | null {
+  function piocherDepuisReserve(difficulte: Difficulte): PersonCard | null {
     const { deckReserve } = get();
     if (deckReserve.length === 0) return null;
 
@@ -73,7 +73,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
 
     // Recharge en arrière-plan si la réserve devient faible
     if (reste.length < DECK_REFILL_THRESHOLD) {
-      refillDeckReserve();
+      refillDeckReserve(difficulte);
     }
 
     return carte;
@@ -100,17 +100,17 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
 
           // Charge les cartes initiales + la réserve en parallèle
           const [cartesInitiales, cartesReserve] = await Promise.all([
-            fetchRandomPersons(6), // 1 carte de départ + 5 en main
-            fetchRandomPersons(DECK_RESERVE_SIZE),
+            fetchPersonsByDifficulty(difficulte, 6), // 1 carte de départ + 5 en main
+            fetchPersonsByDifficulty(difficulte, DECK_RESERVE_SIZE),
           ]);
 
           const deckMelange = melangerTableau(cartesInitiales);
           const [carteDepart, ...reste] = deckMelange;
 
           // Filtre la réserve pour éviter les doublons avec les cartes initiales
-          const initialIds = new Set(cartesInitiales.map((c) => c.id));
+          const initialIds = new Set(cartesInitiales.map((c: PersonCard) => c.id));
           const reserveSansDuplicates = cartesReserve.filter(
-            (c) => !initialIds.has(c.id)
+            (c: PersonCard) => !initialIds.has(c.id)
           );
 
           set({
@@ -131,7 +131,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
       },
 
       placerCarte: async (carteId: string, position: number) => {
-        const { mainEnCours, timeline, vieRestante } = get();
+        const { mainEnCours, timeline, vieRestante, difficulte } = get();
 
         const carte = mainEnCours.find((c) => c.id === carteId);
         if (!carte) return;
@@ -159,7 +159,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
           setTimeout(() => set({ lastPlacementResult: null }), 800);
         } else {
           //  Mauvaise position — pioche instantanée depuis la réserve
-          const nouvelleCarte = piocherDepuisReserve();
+          const nouvelleCarte = piocherDepuisReserve(difficulte);
 
           const mainApresPioche = nouvelleCarte
             ? [...nouvelleMain, nouvelleCarte]
