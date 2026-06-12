@@ -58,7 +58,6 @@ const HubDeJeux = () => {
 
                     <div className="flex-[2] relative flex items-center justify-center min-h-[300px]">
 
-                        {/* Carte gauche - Mac DeMarco */}
 <div className="absolute top-0 left-0 w-52 rotate-[-12deg] z-10">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">
@@ -77,7 +76,6 @@ const HubDeJeux = () => {
     </div>
 </div>
 
-{/* Carte droite - Pierre Niney */}
 <div className="absolute top-0 right-0 w-52 rotate-[10deg] z-10">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">
@@ -96,7 +94,6 @@ const HubDeJeux = () => {
     </div>
 </div>
 
-{/* Carte principale - Napoléon */}
 <div className="relative z-20 w-52 mt-16">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">
@@ -115,7 +112,6 @@ const HubDeJeux = () => {
     </div>
 </div>
 
-{/* Carte de fond - Michael Jackson */}
 <div className="absolute top-[-30px] left-[50%] translate-x-[-50%] z-0 w-52">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">

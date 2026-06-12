@@ -26,8 +26,6 @@ const ModeDeJeu = ({ titre, description, specificitee, couleur, redirection }: P
   return (
     <a href={`/${redirection}`} className="w-full">
       <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
         className={`
           w-full rounded-2xl px-6 py-8 flex flex-col justify-between min-h-[180px]
           border-2 bord-vert cursor-pointer
