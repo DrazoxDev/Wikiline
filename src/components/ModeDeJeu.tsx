@@ -1,47 +1,82 @@
+import { useState } from "react";
 import ImageEtoileVerte from "../../public/images/etoile_verte.png";
-import ImageEtoileBlanche from "../../public/images/etoile_blanche.png";    
+import ImageEtoileBlanche from "../../public/images/etoile_blanche.png";
 
 type Props = {
   titre: string;
   description: string;
   specificitee: string;
-  couleur:string;
-  redirection:string
+  couleur: string;
+  redirection: string;
 }
 
-const ModeDeJeu=({titre, description, specificitee, couleur, redirection}:Props)=>{
-    const imageEtoile = couleur === "vert" ? ImageEtoileBlanche : ImageEtoileVerte;
-    return(
-        <>
-        <a href={`/${redirection}`}>
-        <div className={`${couleur === "vert" ? "bg-vert" : "bg-blanc"} border-2 bord-vert rounded-2xl px-6 py-8 w-full max-w-[600px] flex flex-col justify-between min-h-[180px]`}>
-            <div className="flex items-center justify-between mb-4">
-                <div className="flex gap-3 items-center">
-                    <img src={imageEtoile} className="w-15 h-15" alt="" />
-                    <img src={imageEtoile} className="w-10 h-10" alt="" />
-                    <img src={imageEtoile} className="w-5 h-5" alt="" />
-                </div>
-                <p className={`${couleur === "vert" ? "couleur-blanc" : "couleur-vert"} font-bold text-lg`}>{titre}</p>
-                <div className="flex gap-3 items-center">
-                    <img src={imageEtoile} className="w-5 h-5" alt="" />
-                    <img src={imageEtoile} className="w-10 h-10" alt="" />
-                    <img src={imageEtoile} className="w-15 h-15" alt="" />
-                </div>
-            </div>
+const ModeDeJeu = ({ titre, description, specificitee, couleur, redirection }: Props) => {
+  const [hovered, setHovered] = useState(false);
+  const isVert = couleur === "vert";
 
-            <div className="flex gap-4 items-center">
-                <p className={`${couleur === "vert" ? "couleur-blanc" : "couleur-vert"} font-bold flex-1`}>{description}</p>
-                <div className={`${couleur === "vert" ? "couleur-blanc bg-blanc" : "couleur-vert bg-vert"} rounded-xl p-4 flex-1`}>
-                    <p className={`${couleur === "vert" ? "couleur-vert" : "couleur-blanc"} font-bold mb-2`}>Spécificitée :</p>
-                    <p className={`${couleur === "vert" ? "couleur-vert" : "couleur-blanc"} font-bold flex-1`}>{specificitee}</p>
-                </div>
-            </div>
+  // État effectif : si hovered, on inverse
+  const showVert = hovered ? !isVert : isVert;
+
+  const bgCard    = showVert ? "bg-vert"  : "bg-blanc";
+  const textMain  = showVert ? "text-[#E0E2DB]" : "text-[#21897E]";
+  const bgInner   = showVert ? "bg-blanc" : "bg-vert";
+  const textInner = showVert ? "text-[#21897E]" : "text-[#E0E2DB]";
+  const etoile    = showVert ? ImageEtoileBlanche : ImageEtoileVerte;
+
+  return (
+    <a href={`/${redirection}`} className="w-full">
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={`
+          w-full rounded-2xl px-6 py-8 flex flex-col justify-between min-h-[180px]
+          border-2 bord-vert cursor-pointer
+          transition-all duration-300 ease-in-out
+          hover:-translate-y-1
+          ${bgCard}
+        `}
+      >
+        {/* Titre + étoiles */}
+        <div className="flex items-center justify-between mb-4">
+
+          <div className="flex gap-3 items-center">
+            <img src={etoile} className="w-15 h-15" alt="" />
+            <img src={etoile} className="w-10 h-10" alt="" />
+            <img src={etoile} className="w-5  h-5"  alt="" />
+          </div>
+
+          <p className={`font-bold text-lg transition-colors duration-300 ${textMain}`}>
+            {titre}
+          </p>
+
+          <div className="flex gap-3 items-center">
+            <img src={etoile} className="w-5  h-5"  alt="" />
+            <img src={etoile} className="w-10 h-10" alt="" />
+            <img src={etoile} className="w-15 h-15" alt="" />
+          </div>
+
         </div>
-        </a>
 
-    </>
+        {/* Description + spécificités */}
+        <div className="flex gap-4 items-center">
 
-    );
+          <p className={`font-bold flex-1 transition-colors duration-300 ${textMain}`}>
+            {description}
+          </p>
+
+          <div className={`rounded-xl p-4 flex-1 transition-colors duration-300 ${bgInner}`}>
+            <p className={`font-bold mb-2 transition-colors duration-300 ${textInner}`}>
+              Spécificité :
+            </p>
+            <p className={`font-bold transition-colors duration-300 ${textInner}`}>
+              {specificitee}
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </a>
+  );
 }
 
 export default ModeDeJeu;
