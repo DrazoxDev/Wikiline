@@ -20,9 +20,11 @@ const HubDeJeux = () => {
                                 <polygon points="25,2 31,18 48,18 34,29 39,46 25,36 11,46 16,29 2,18 19,18" fill="#D9D9C8" />
                             </svg>
                             <div className="flex-1 bg-vert border-[3px] border-white rounded-[1rem] p-[3px]">
-                                <button className="w-full bg-blanc hover:bg-[#21897E] rounded-[1rem] py-5 px-8 transition-colors duration-200 group">
-                                    <span className="couleur-vert group-hover:text-[#D9D9C8] font-titre text-3xl transition-colors duration-200">Votre collection</span>
-                                </button>
+                                <a href="/VosCartes">
+                                    <button className="w-full bg-blanc hover:bg-[#21897E] rounded-[1rem] py-5 px-8 transition-colors duration-200 group">
+                                        <span className="couleur-vert group-hover:text-[#D9D9C8] font-titre text-3xl transition-colors duration-200">Votre collection</span>
+                                    </button>
+                                </a>
                             </div>
                         </div>
 
@@ -31,9 +33,11 @@ const HubDeJeux = () => {
                                 <polygon points="25,2 31,18 48,18 34,29 39,46 25,36 11,46 16,29 2,18 19,18" fill="#D9D9C8" />
                             </svg>
                             <div className="flex-1 bg-vert border-[3px] border-white rounded-[1rem] p-[3px]">
-                                <button className="w-full bg-blanc hover:bg-[#21897E] rounded-[1rem] py-5 px-8 transition-colors duration-200 group">
-                                    <span className="couleur-vert group-hover:text-[#D9D9C8] font-titre text-3xl transition-colors duration-200">Packs de cartes</span>
-                                </button>
+                                <a href="/Booster">
+                                    <button  className="w-full bg-blanc hover:bg-[#21897E] rounded-[1rem] py-5 px-8 transition-colors duration-200 group">
+                                         <span className="couleur-vert group-hover:text-[#D9D9C8] font-titre text-3xl transition-colors duration-200">Packs de cartes</span>
+                                    </button>
+                                </a>
                             </div>
                         </div>
 
@@ -42,9 +46,11 @@ const HubDeJeux = () => {
                                 <polygon points="25,2 31,18 48,18 34,29 39,46 25,36 11,46 16,29 2,18 19,18" fill="#D9D9C8" />
                             </svg>
                             <div className="flex-1 bg-vert border-[3px] border-white rounded-[1rem] p-[3px]">
-                                <button className="w-full bg-blanc hover:bg-[#21897E] rounded-[1rem] py-5 px-8 transition-colors duration-200 group">
-                                    <span className="couleur-vert group-hover:text-[#D9D9C8] font-titre text-3xl transition-colors duration-200">Jouez vos cartes</span>
-                                </button>
+                                <a href="/choixmode">
+                                    <button className="w-full bg-blanc hover:bg-[#21897E] rounded-[1rem] py-5 px-8 transition-colors duration-200 group">
+                                        <span className="couleur-vert group-hover:text-[#D9D9C8] font-titre text-3xl transition-colors duration-200">Jouez vos cartes</span>
+                                    </button>
+                                </a>
                             </div>
                         </div>
 
@@ -52,7 +58,6 @@ const HubDeJeux = () => {
 
                     <div className="flex-[2] relative flex items-center justify-center min-h-[300px]">
 
-                        {/* Carte gauche - Mac DeMarco */}
 <div className="absolute top-0 left-0 w-52 rotate-[-12deg] z-10">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">
@@ -71,7 +76,6 @@ const HubDeJeux = () => {
     </div>
 </div>
 
-{/* Carte droite - Pierre Niney */}
 <div className="absolute top-0 right-0 w-52 rotate-[10deg] z-10">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">
@@ -90,7 +94,6 @@ const HubDeJeux = () => {
     </div>
 </div>
 
-{/* Carte principale - Napoléon */}
 <div className="relative z-20 w-52 mt-16">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">
@@ -109,7 +112,6 @@ const HubDeJeux = () => {
     </div>
 </div>
 
-{/* Carte de fond - Michael Jackson */}
 <div className="absolute top-[-30px] left-[50%] translate-x-[-50%] z-0 w-52">
     <div className="bg-[#21897E] rounded-[2rem] p-[3px]">
         <div className="bg-white rounded-[1.8rem] overflow-hidden">
