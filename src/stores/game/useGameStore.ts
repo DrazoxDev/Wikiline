@@ -35,77 +35,131 @@ function estBienPlacee(
   return apresGauche && avantDroite;
 }
 
-export const useGameStore = create<GameStore>((set, get) => ({
-  difficulte: "facile",
-  vies: null,
-  tempsLimite: null,
-  categorieCarte: "legendaire",
-  timeline: [],
-  mainEnCours: [],
-  deck: [],
-  vieRestante: null,
-  gameStatus: "idle",
+// Taille du deck pré-chargé en réserve
+const DECK_RESERVE_SIZE = 8;
+// On recharge quand il reste moins de X cartes en réserve
+const DECK_REFILL_THRESHOLD = 3;
 
-  actions: {
+type GameStoreInternal = GameStore & {
+  deckReserve: PersonCard[];
+  lastPlacementResult: "correct" | "incorrect" | null;
+};
 
-    startGame: async (difficulte: Difficulte) => {
-      set({ gameStatus: "chargement" });
+export const useGameStore = create<GameStoreInternal>((set, get) => {
+  // Fonction interne pour pré-charger des cartes en arrière-plan
+  async function refillDeckReserve() {
+    const { deckReserve } = get();
+    const existingIds = new Set([...deckReserve].map((c) => c.id));
 
-      try {
-        const config = DIFFICULTE_CONFIG[difficulte];
+    try {
+      const nouvelles = await fetchRandomPersons(DECK_RESERVE_SIZE);
+      const sansDuplicates = nouvelles.filter((c) => !existingIds.has(c.id));
 
-        const toutesLesCartes = await fetchRandomPersons(15);
-        const deckMelange = melangerTableau(toutesLesCartes);
+      set((state) => ({
+        deckReserve: [...state.deckReserve, ...sansDuplicates],
+      }));
+    } catch (err) {
+      console.warn("Erreur lors du rechargement du deck :", err);
+    }
+  }
 
-        const [carteDepart, ...reste] = deckMelange;
+  // Pioche une carte depuis la réserve (et recharge si nécessaire)
+  function piocherDepuisReserve(): PersonCard | null {
+    const { deckReserve } = get();
+    if (deckReserve.length === 0) return null;
 
+    const [carte, ...reste] = deckReserve;
+    set({ deckReserve: reste });
 
-        set({
-          difficulte,
-          vies: config.vies,
-          tempsLimite: config.limiteTemps,
-          categorieCarte: config.niveauPopularite,
-          vieRestante: config.vies,
-          timeline: carteDepart ? [carteDepart] : [],
-          mainEnCours: reste,
-          gameStatus: "En cours",
-        });
+    // Recharge en arrière-plan si la réserve devient faible
+    if (reste.length < DECK_REFILL_THRESHOLD) {
+      refillDeckReserve();
+    }
 
-      } catch (error) {
-        console.error("Erreur lors du chargement des cartes :", error);
-        set({ gameStatus: "idle" });
-      }
-    },
+    return carte;
+  }
 
-    placerCarte: async (carteId: string, position: number) => {
-      const { mainEnCours, timeline, vieRestante } = get();
+  return {
+    difficulte: "facile",
+    vies: null,
+    tempsLimite: null,
+    categorieCarte: "legendaire",
+    timeline: [],
+    mainEnCours: [],
+    deckReserve: [],
+    vieRestante: null,
+    gameStatus: "idle",
+    lastPlacementResult: null,
 
-      const carte = mainEnCours.find((c) => c.id === carteId);
-      if (!carte) return;
+    actions: {
+      startGame: async (difficulte: Difficulte) => {
+        set({ gameStatus: "chargement", deckReserve: [], lastPlacementResult: null });
 
-      const nouvelleMain = mainEnCours.filter((c) => c.id !== carteId);
-
-      if (estBienPlacee(timeline, carte, position)) {
-        // ✅ Bonne position : on place la carte, on NE pioche PAS
-        const nouvelleTimeline = [
-          ...timeline.slice(0, position),
-          carte,
-          ...timeline.slice(position),
-        ];
-
-        // Victoire si la main est maintenant vide
-        const gameStatus = nouvelleMain.length === 0 ? "gagner" : "En cours";
-
-        set({
-          timeline: nouvelleTimeline,
-          mainEnCours: nouvelleMain,
-          gameStatus,
-        });
-
-      } else {
         try {
-          const nouvellesCartes = await fetchRandomPersons(1);
-          const nouvelleCarte = nouvellesCartes[0];
+          const config = DIFFICULTE_CONFIG[difficulte];
+
+          // Charge les cartes initiales + la réserve en parallèle
+          const [cartesInitiales, cartesReserve] = await Promise.all([
+            fetchRandomPersons(6), // 1 carte de départ + 5 en main
+            fetchRandomPersons(DECK_RESERVE_SIZE),
+          ]);
+
+          const deckMelange = melangerTableau(cartesInitiales);
+          const [carteDepart, ...reste] = deckMelange;
+
+          // Filtre la réserve pour éviter les doublons avec les cartes initiales
+          const initialIds = new Set(cartesInitiales.map((c) => c.id));
+          const reserveSansDuplicates = cartesReserve.filter(
+            (c) => !initialIds.has(c.id)
+          );
+
+          set({
+            difficulte,
+            vies: config.vies,
+            tempsLimite: config.limiteTemps,
+            categorieCarte: config.niveauPopularite,
+            vieRestante: config.vies,
+            timeline: carteDepart ? [carteDepart] : [],
+            mainEnCours: reste,
+            deckReserve: reserveSansDuplicates,
+            gameStatus: "En cours",
+          });
+        } catch (error) {
+          console.error("Erreur lors du chargement des cartes :", error);
+          set({ gameStatus: "idle" });
+        }
+      },
+
+      placerCarte: async (carteId: string, position: number) => {
+        const { mainEnCours, timeline, vieRestante } = get();
+
+        const carte = mainEnCours.find((c) => c.id === carteId);
+        if (!carte) return;
+
+        const nouvelleMain = mainEnCours.filter((c) => c.id !== carteId);
+
+        if (estBienPlacee(timeline, carte, position)) {
+          //  Bonne position
+          const nouvelleTimeline = [
+            ...timeline.slice(0, position),
+            carte,
+            ...timeline.slice(position),
+          ];
+
+          const gameStatus = nouvelleMain.length === 0 ? "gagner" : "En cours";
+
+          set({
+            timeline: nouvelleTimeline,
+            mainEnCours: nouvelleMain,
+            gameStatus,
+            lastPlacementResult: "correct",
+          });
+
+          // Reset le feedback après 800ms
+          setTimeout(() => set({ lastPlacementResult: null }), 800);
+        } else {
+          //  Mauvaise position — pioche instantanée depuis la réserve
+          const nouvelleCarte = piocherDepuisReserve();
 
           const mainApresPioche = nouvelleCarte
             ? [...nouvelleMain, nouvelleCarte]
@@ -115,33 +169,34 @@ export const useGameStore = create<GameStore>((set, get) => ({
             vieRestante !== null ? vieRestante - 1 : null;
 
           const gameStatus =
-            nouvellesVies !== null && nouvellesVies <= 0
-              ? "perdu"
-              : "En cours";
+            nouvellesVies !== null && nouvellesVies <= 0 ? "perdu" : "En cours";
 
           set({
             mainEnCours: mainApresPioche,
             vieRestante: nouvellesVies,
             gameStatus,
+            lastPlacementResult: "incorrect",
           });
 
-        } catch (error) {
-          console.error("Erreur lors de la pioche :", error);
+          // Reset le feedback après 800ms
+          setTimeout(() => set({ lastPlacementResult: null }), 800);
         }
-      }
-    },
+      },
 
-    resetGame: () => {
-      set({
-        difficulte: "facile",
-        vies: null,
-        tempsLimite: null,
-        categorieCarte: "legendaire",
-        timeline: [],
-        mainEnCours: [],
-        vieRestante: null,
-        gameStatus: "idle",
-      });
+      resetGame: () => {
+        set({
+          difficulte: "facile",
+          vies: null,
+          tempsLimite: null,
+          categorieCarte: "legendaire",
+          timeline: [],
+          mainEnCours: [],
+          deckReserve: [],
+          vieRestante: null,
+          gameStatus: "idle",
+          lastPlacementResult: null,
+        });
+      },
     },
-  },
-}));  
+  };
+});
