@@ -49,7 +49,7 @@ const Profil = () => {
         <div className="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto">
 
           <div className="bg-[#21897E] rounded-2xl p-8 flex-1">
-            <h3 className="font-soustitre text-[#E0E2DB] text-2xl mb-6">Nombres de parties jouées</h3>
+            <h3 className="font-soustitre text-[#E0E2DB] text-2xl mb-6">Nombres de parties jouées en entrainement</h3>
             <div className="flex gap-4">
               {user.stats.map((stat) => (
                 <div key={stat.label} className="bg-[#E0E2DB] rounded-xl flex-1 aspect-square flex flex-col items-center justify-center gap-2 p-4">
@@ -63,18 +63,18 @@ const Profil = () => {
               ))}
             </div>
 
-            <h3 className="font-soustitre text-[#E0E2DB] text-2xl mb-6">Nombres de parties jouées</h3>
+            <h3 className="font-soustitre text-[#E0E2DB] text-2xl mb-6">Nombres de parties classiques jouées</h3>
             <div className="flex gap-4">
-              {user.stats.map((stat) => (
-                <div key={stat.label} className="bg-[#E0E2DB] rounded-xl flex-1 aspect-square flex flex-col items-center justify-center gap-2 p-4">
+
+                <div className="bg-[#E0E2DB] rounded-xl flex-1 aspect-square flex flex-col items-center justify-center gap-2 p-4">
                   <span className="font-titre text-[#21897E] text-4xl">
-                    {stat.value}
+                    
                   </span>
                   <span className="font-soustitre text-[#21897E] text-xs text-center">
-                    {stat.label}
+                    
                   </span>
                 </div>
-              ))}
+              
             </div>
 
           </div>
