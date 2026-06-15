@@ -1,5 +1,8 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useDrag } from "react-dnd";
 import type { PersonCard } from "../../types/person";
+
+export const CARTE_DRAG_TYPE = "CARTE";
 
 type CarteJeuProps = {
   carte: PersonCard;
@@ -9,26 +12,24 @@ type CarteJeuProps = {
 
 const CarteJeu = ({ carte, isInHand = false }: CarteJeuProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    e.dataTransfer.setData("carteId", carte.id);
-    e.dataTransfer.effectAllowed = "move";
-
-    // Utilise le DOM réel de la carte comme image de drag
-    if (cardRef.current) {
-      e.dataTransfer.setDragImage(cardRef.current, 80, 120);
-    }
-  };
+  const [{ isDragging }, dragRef] = useDrag({
+    type: CARTE_DRAG_TYPE,
+    item: { carteId: carte.id },
+    canDrag: isInHand,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
 
   // Carte en main : draggable
   if (isInHand) {
     return (
       <div
-        ref={cardRef}
-        draggable
-        onDragStart={handleDragStart}
-        className="relative w-40 h-60 cursor-grab active:cursor-grabbing shrink-0"
+        ref={dragRef}
+        className={`relative w-40 h-60 cursor-grab active:cursor-grabbing shrink-0 transition-opacity duration-200 ${
+          isDragging ? "opacity-40" : "opacity-100"
+        }`}
       >
         <div className="bg-[#21897E] rounded-[2rem] p-[3px] h-full">
           <div className="bg-white rounded-[1.8rem] overflow-hidden h-full flex flex-col">

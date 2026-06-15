@@ -1,3 +1,5 @@
+import { DndProvider, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import Header from "../components/Header";
 import {
   useGameMainEnCours,
@@ -8,8 +10,7 @@ import {
   useLastPlacementResult,
 } from "../stores/game/game.selectors";
 import { useNavigate } from "react-router";
-import CarteJeu from "../components/cards/CarteJeu";
-import { useState } from "react";
+import CarteJeu, { CARTE_DRAG_TYPE } from "../components/cards/CarteJeu";
 
 /** Zone de dépôt entre deux cartes (ou aux extrémités) de la timeline */
 const DropZone = ({
@@ -19,32 +20,23 @@ const DropZone = ({
   position: number;
   onDrop: (carteId: string, position: number) => void;
 }) => {
-  const [isOver, setIsOver] = useState(false);
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-    setIsOver(true);
-  };
-
-  const handleDragLeave = () => setIsOver(false);
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsOver(false);
-    const carteId = e.dataTransfer.getData("carteId");
-    if (carteId) onDrop(carteId, position);
-  };
+  const [{ isOver }, dropRef] = useDrop({
+    accept: CARTE_DRAG_TYPE,
+    drop: (item: { carteId: string }) => {
+      onDrop(item.carteId, position);
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  });
 
   return (
     <div
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-      className={`shrink-0 w-10 h-60 rounded-xl border-2 border-dashed transition-all duration-200 flex items-center justify-center ${
+      ref={dropRef}
+      className={`shrink-0 h-60 rounded-xl border-2 border-dashed transition-all duration-200 flex items-center justify-center ${
         isOver
-          ? "border-[#21897E] bg-[#21897E]/20 w-16"
-          : "border-[#21897E]/30 bg-transparent"
+          ? "w-16 border-[#21897E] bg-[#21897E]/20"
+          : "w-10 border-[#21897E]/30 bg-transparent"
       }`}
     >
       {isOver && (
@@ -54,7 +46,7 @@ const DropZone = ({
   );
 };
 
-const Game = () => {
+const GameContent = () => {
   const gameStatus = useGameStatus();
   const vieRestante = useGameVieRestante();
   const timeline = useGameTimeline();
@@ -221,6 +213,14 @@ const Game = () => {
 
       </main>
     </>
+  );
+};
+
+const Game = () => {
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <GameContent />
+    </DndProvider>
   );
 };
 
