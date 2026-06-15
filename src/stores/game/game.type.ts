@@ -3,6 +3,7 @@ import type { Difficulte } from "./difficulteConfig";
 
 export type GameStore = {
   difficulte: Difficulte;
+  modedejeux :"classique" | "entrainement" | "challenge";
   vies: number | null;
   tempsLimite: number | null;
   categorieCarte: Rarete;

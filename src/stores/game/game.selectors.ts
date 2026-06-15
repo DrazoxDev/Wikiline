@@ -19,3 +19,5 @@ export const useGameTimeline = () => useGameStore((state) => state.timeline)
 export const useGameActions = () => useGameStore((state) => state.actions)
 
 export const useLastPlacementResult = () => useGameStore((state) => state.lastPlacementResult)
+
+export const useGameIsTraining = () => useGameStore((state) => state.trainningornot)

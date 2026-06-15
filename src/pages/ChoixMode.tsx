@@ -18,7 +18,7 @@ const ChoixMode = () => {
             description="Entrainer vous au mode de jeux normal pour pouvoir battre tout les scores"
             specificitee="Nombre de vies illimitéesPas de temps"
             couleur="vert"
-            redirection=""
+            redirection="choix_difficulte"
           />
           <ModeDeJeu
             titre="Mode classique"
@@ -28,12 +28,20 @@ const ChoixMode = () => {
             redirection="choix_difficulte"
           />
           <ModeDeJeu
+            titre="Mode challenge"
+            description="Poser le plus de cartes sur la table "
+            specificitee="A chaque carte poser une autre apparait"
+            couleur="vert"
+            redirection="choix_difficulte"
+          />
+          <ModeDeJeu
             titre="Mode Wikiline-Gacha"
             description="Ouvrez des booster de cartes et jouer avec celles obtenues, collectionner les cartes et obtener le meilleur score"
             specificitee="Nombre de vie illimité. Pas de temps"
-            couleur="vert"
+            couleur="blanc"
             redirection="HubDeJeux"
           />
+
         </div>
 
       </section>

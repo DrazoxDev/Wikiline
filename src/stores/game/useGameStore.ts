@@ -90,10 +90,11 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
     vieRestante: null,
     gameStatus: "idle",
     lastPlacementResult: null,
+    trainningornot: false,
 
     actions: {
       startGame: async (difficulte: Difficulte) => {
-        set({ gameStatus: "chargement", deckReserve: [], lastPlacementResult: null });
+        set({ gameStatus: "chargement", deckReserve: [], lastPlacementResult: null, trainningornot: difficulte === "entrainement" });
 
         try {
           const config = DIFFICULTE_CONFIG[difficulte];
@@ -195,6 +196,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
           vieRestante: null,
           gameStatus: "idle",
           lastPlacementResult: null,
+          trainningornot: false,
         });
       },
     },
