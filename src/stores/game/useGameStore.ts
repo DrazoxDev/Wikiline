@@ -42,7 +42,6 @@ const DECK_REFILL_THRESHOLD = 3;
 
 type GameStoreInternal = GameStore & {
   deckReserve: PersonCard[];
-  lastPlacementResult: "correct" | "incorrect" | null;
 };
 
 export const useGameStore = create<GameStoreInternal>((set, get) => {
@@ -81,6 +80,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
 
   return {
     difficulte: "facile",
+    modedejeux: "classique",
     vies: null,
     tempsLimite: null,
     categorieCarte: "legendaire",
@@ -88,13 +88,26 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
     mainEnCours: [],
     deckReserve: [],
     vieRestante: null,
+    score: 0,
     gameStatus: "idle",
     lastPlacementResult: null,
     trainningornot: false,
 
     actions: {
+      setModeDeJeu: (mode) => {
+        set({ modedejeux: mode });
+      },
+
       startGame: async (difficulte: Difficulte) => {
-        set({ gameStatus: "chargement", deckReserve: [], lastPlacementResult: null, trainningornot: difficulte === "entrainement" });
+        const { modedejeux } = get();
+
+        set({
+          gameStatus: "chargement",
+          deckReserve: [],
+          lastPlacementResult: null,
+          score: 0,
+          trainningornot: modedejeux === "entrainement",
+        });
 
         try {
           const config = DIFFICULTE_CONFIG[difficulte];
@@ -131,15 +144,93 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
         }
       },
 
-      placerCarte: async (carteId: string, position: number) => {
-        const { mainEnCours, timeline, vieRestante, difficulte } = get();
+      placerCarte: (carteId: string, position: number) => {
+        const { mainEnCours, timeline, vieRestante, difficulte, modedejeux, score } = get();
 
         const carte = mainEnCours.find((c) => c.id === carteId);
         if (!carte) return;
 
         const nouvelleMain = mainEnCours.filter((c) => c.id !== carteId);
+        const placementCorrect = estBienPlacee(timeline, carte, position);
 
-        if (estBienPlacee(timeline, carte, position)) {
+        // ── MODE CHALLENGE ──────────────────────────────────────────────
+        // Une nouvelle carte est ajoutée systématiquement.
+        // Bonne carte : +1 au score, on continue.
+        // Mauvaise carte : fin de partie immédiate (score final = nb de bonnes cartes).
+        if (modedejeux === "challenge") {
+          if (placementCorrect) {
+            const nouvelleTimeline = [
+              ...timeline.slice(0, position),
+              carte,
+              ...timeline.slice(position),
+            ];
+
+            const nouvelleCarte = piocherDepuisReserve(difficulte);
+            const mainApresPioche = nouvelleCarte
+              ? [...nouvelleMain, nouvelleCarte]
+              : nouvelleMain;
+
+            set({
+              timeline: nouvelleTimeline,
+              mainEnCours: mainApresPioche,
+              score: score + 1,
+              gameStatus: "En cours",
+              lastPlacementResult: "correct",
+            });
+
+            setTimeout(() => set({ lastPlacementResult: null }), 800);
+          } else {
+            // Erreur en challenge = fin de partie immédiate
+            set({
+              mainEnCours: nouvelleMain,
+              gameStatus: "perdu",
+              lastPlacementResult: "incorrect",
+            });
+          }
+          return;
+        }
+
+        // ── MODE ENTRAÎNEMENT ────────────────────────────────────────────
+        // Identique au classique sur le fond, sauf : jamais de perte de vie,
+        // jamais de défaite. Une erreur pioche juste une nouvelle carte.
+        if (modedejeux === "entrainement") {
+          if (placementCorrect) {
+            const nouvelleTimeline = [
+              ...timeline.slice(0, position),
+              carte,
+              ...timeline.slice(position),
+            ];
+
+            const gameStatus = nouvelleMain.length === 0 ? "gagner" : "En cours";
+
+            set({
+              timeline: nouvelleTimeline,
+              mainEnCours: nouvelleMain,
+              gameStatus,
+              lastPlacementResult: "correct",
+            });
+
+            setTimeout(() => set({ lastPlacementResult: null }), 800);
+          } else {
+            const nouvelleCarte = piocherDepuisReserve(difficulte);
+
+            const mainApresPioche = nouvelleCarte
+              ? [...nouvelleMain, nouvelleCarte]
+              : nouvelleMain;
+
+            set({
+              mainEnCours: mainApresPioche,
+              gameStatus: "En cours",
+              lastPlacementResult: "incorrect",
+            });
+
+            setTimeout(() => set({ lastPlacementResult: null }), 800);
+          }
+          return;
+        }
+
+        // ── MODE CLASSIQUE (inchangé) ────────────────────────────────────
+        if (placementCorrect) {
           //  Bonne position
           const nouvelleTimeline = [
             ...timeline.slice(0, position),
@@ -187,6 +278,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
       resetGame: () => {
         set({
           difficulte: "facile",
+          modedejeux: "classique",
           vies: null,
           tempsLimite: null,
           categorieCarte: "legendaire",
@@ -194,6 +286,7 @@ export const useGameStore = create<GameStoreInternal>((set, get) => {
           mainEnCours: [],
           deckReserve: [],
           vieRestante: null,
+          score: 0,
           gameStatus: "idle",
           lastPlacementResult: null,
           trainningornot: false,

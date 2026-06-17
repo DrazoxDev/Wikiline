@@ -2,6 +2,8 @@ import { useGameStore } from './useGameStore';
 
 export const useGameDifficulte = () => useGameStore((state) => state.difficulte)
 
+export const useGameModeDeJeu = () => useGameStore((state) => state.modedejeux)
+
 export const useGameStatus = () => useGameStore((state) => state.gameStatus)
 
 export const useGameVies = () => useGameStore((state) => state.vies)
@@ -21,3 +23,5 @@ export const useGameActions = () => useGameStore((state) => state.actions)
 export const useLastPlacementResult = () => useGameStore((state) => state.lastPlacementResult)
 
 export const useGameIsTraining = () => useGameStore((state) => state.trainningornot)
+
+export const useGameScore = () => useGameStore((state) => state.score)

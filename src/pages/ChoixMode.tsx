@@ -1,7 +1,10 @@
 import Header from "../components/Header";
 import ModeDeJeu from "../components/ModeDeJeu"
+import { useGameActions } from "../stores/game/game.selectors";
 
 const ChoixMode = () => {
+  const { setModeDeJeu } = useGameActions();
+
   return (
     <>
       <Header></Header>
@@ -16,9 +19,10 @@ const ChoixMode = () => {
           <ModeDeJeu
             titre="Mode entrainement"
             description="Entrainer vous au mode de jeux normal pour pouvoir battre tout les scores"
-            specificitee="Nombre de vies illimitéesPas de temps"
+            specificitee="Nombre de vies illimitéesPas de temps / Diffficultée normal / Diffficultée normal"
             couleur="vert"
             redirection="choix_difficulte"
+            onSelect={() => setModeDeJeu("entrainement")}
           />
           <ModeDeJeu
             titre="Mode classique"
@@ -26,6 +30,7 @@ const ChoixMode = () => {
             specificitee="Nombre de vie illimitésPas de temps"
             couleur="blanc"
             redirection="choix_difficulte"
+            onSelect={() => setModeDeJeu("classique")}
           />
           <ModeDeJeu
             titre="Mode challenge"
@@ -33,6 +38,7 @@ const ChoixMode = () => {
             specificitee="A chaque carte poser une autre apparait"
             couleur="vert"
             redirection="choix_difficulte"
+            onSelect={() => setModeDeJeu("challenge")}
           />
           <ModeDeJeu
             titre="Mode Wikiline-Gacha"

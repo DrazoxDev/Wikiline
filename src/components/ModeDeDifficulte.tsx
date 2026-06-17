@@ -2,6 +2,7 @@ type Props = {
   titre: string;
   nbretoiles: number;
   specificitee: string[];
+  modejeu:string;
   onClick: () => void;
 }
 

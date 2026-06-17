@@ -9,6 +9,8 @@ import {
   useGameVieRestante,
   useGameActions,
   useLastPlacementResult,
+  useGameScore,
+  useGameModeDeJeu,
 } from "../stores/game/game.selectors";
 
 export const GameContent = () => {
@@ -18,6 +20,8 @@ export const GameContent = () => {
   const mainEnCours = useGameMainEnCours();
   const { placerCarte } = useGameActions();
   const lastPlacementResult = useLastPlacementResult();
+  const score = useGameScore();
+  const modedejeux = useGameModeDeJeu();
 
   if (gameStatus === "idle") return <GameIdle />;
   if (gameStatus === "chargement") return <GameLoading />;
@@ -49,7 +53,11 @@ export const GameContent = () => {
 
       <main className="flex flex-col h-[calc(100vh-80px)]">
         <div className="flex justify-between items-center px-6 py-3">
-          <p className="font-soustitre font-bold text-[#21897E]">Vies : {vieRestante ?? "∞"}</p>
+          <p className="font-soustitre font-bold text-[#21897E]">
+            {modedejeux === "challenge"
+              ? `Score : ${score}`
+              : `Vies : ${vieRestante ?? "∞"}`}
+          </p>
           <p className="font-soustitre font-bold text-[#21897E]">Cartes en main : {mainEnCours.length}</p>
         </div>
 

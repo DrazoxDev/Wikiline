@@ -1,11 +1,41 @@
 import Header from "../components/Header";
 import ModeDeDifficulte from "../components/ModeDeDifficulte";
-import { useGameActions } from "../stores/game/game.selectors";
+import { useGameActions, useGameModeDeJeu } from "../stores/game/game.selectors";
 import { useNavigate } from "react-router";
 
 const Difficulte = () => {
     const { startGame } = useGameActions();
+    const modedejeux = useGameModeDeJeu();
     const navigate = useNavigate();
+
+    function getSpecificitees(
+        modedejeux: "classique" | "entrainement" | "challenge",
+        niveauPopularite: string,
+        viesClassique: number,
+        tempsClassique: string
+    ): string[] {
+        if (modedejeux === "entrainement") {
+            return [
+                "Pas de vies, pas d'échec",
+                tempsClassique,
+                niveauPopularite,
+            ];
+        }
+
+        if (modedejeux === "challenge") {
+            return [
+                "1 vie",
+                niveauPopularite,
+                "Le score, c'est le nombre de cartes bien placées",
+            ];
+        }
+
+        return [
+            `${viesClassique} vies`,
+            tempsClassique,
+            niveauPopularite,
+        ];
+    }
 
     return (
         <>
@@ -37,44 +67,44 @@ const Difficulte = () => {
                     <ModeDeDifficulte
                         titre="Facile"
                         nbretoiles={1}
-                        specificitee={[
-                            "5 vies",
-                            "Pas de temps",
+                        specificitee={getSpecificitees(
+                            modedejeux,
                             "Personnalité connue",
-                        ]}
+                            5,
+                            "Pas de temps"
+                        )}
                         onClick={async () => {
                             startGame("facile");
                             navigate("/game");
-                        }}
-                    />
+                        } } modejeu={""}                    />
 
                     <ModeDeDifficulte
                         titre="Moyen"
                         nbretoiles={3}
-                        specificitee={[
-                            "4 vies",
-                            "1min par essais",
+                        specificitee={getSpecificitees(
+                            modedejeux,
                             "Personnalité moyennement connue",
-                        ]}
+                            4,
+                            "1min par essais"
+                        )}
                         onClick={async () => {
                             startGame("moyen");
                             navigate("/game");
-                        }}
-                    />
+                        } } modejeu={""}                    />
 
                     <ModeDeDifficulte
                         titre="Difficile"
                         nbretoiles={5}
-                        specificitee={[
-                            "3 vies",
-                            "10sec par essais",
+                        specificitee={getSpecificitees(
+                            modedejeux,
                             "Personnalité peu connue",
-                        ]}
+                            3,
+                            "10sec par essais"
+                        )}
                         onClick={async () => {
                             startGame("difficile");
                             navigate("/game");
-                        }}
-                    />
+                        } } modejeu={""}                    />
                 </div>
 
             </section>
