@@ -50,7 +50,6 @@ const CommentJouer = () => {
                         />
                     </div>
 
-
                     <div className="flex-[3]">
                         <p className="text-[#21897E] font-bold text-lg mb-2">Déroulement d'un tour</p>
                         <ol className="list-decimal list-inside space-y-2">
